@@ -1,0 +1,16 @@
+import = [
+    "~/.config/alacritty/themes/themes/afterglow.toml"
+]
+
+[font]
+normal.family = "Jetbrains Mono"
+bold.family = "Jetbrains Mono"
+italic.family = "Jetbrains Mono"
+
+[colors]
+[colors.primary]
+background = "#1f1f28"
+
+[window]
+padding = {x=8, y=8}
+
