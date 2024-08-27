@@ -29,6 +29,9 @@ alias home="cd ~"
 
 # Windows Alias
 alias del="rm"
+alias copy="cp"
+alias move="mv"
+alias del="rm"
 
 # Network
 alias myip="curl ipinfo.io/ip"
