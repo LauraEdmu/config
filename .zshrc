@@ -26,6 +26,7 @@ alias ..="cd .."
 alias list="ls -lh"
 alias nvInit="nvim ~/.config/nvim/init.lua"
 alias home="cd ~"
+alias pfind="ps aux | grep "
 
 # Windows Alias
 alias del="rm"
