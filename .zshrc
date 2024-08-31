@@ -47,6 +47,7 @@ alias nmapOS="nmap -O"
 alias speed="speedtest-cli"
 alias trace="traceroute"
 alias nmapStealth="sudo nmap -sS"
+alias download='aria2c -x 16 -s 16 -k 1M --auto-file-renaming=false --summary-interval=0 --continue=true --retry-wait=5 --max-tries=3'
 
 # System
 alias off="sudo shutdown now"
