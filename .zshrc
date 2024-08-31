@@ -55,6 +55,7 @@ alias firmware="systemctl reboot --firmware-setup"
 
 # Git
 alias lg="git log --graph --date=relative --abbrev-commit --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Creset %s%Cgreen(%cr)%creset'"
+alias gd="git diff --color | diff-so-fancy"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
