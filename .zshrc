@@ -53,6 +53,9 @@ alias download='aria2c -x 16 -s 16 -k 1M --auto-file-renaming=false --summary-in
 alias off="sudo shutdown now"
 alias firmware="systemctl reboot --firmware-setup"
 
+# Git
+alias lg="git log --graph --date=relative --abbrev-commit --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Creset %s%Cgreen(%cr)%creset'"
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
