@@ -56,7 +56,8 @@ alias bat_old="upower -i $(upower -e | grep 'BAT') | grep -E 'percentage'"
 alias bat="acpi -a -b -t"
 
 # Git
-alias lg="git log --graph --date=relative --abbrev-commit --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Creset %s%Cgreen(%cr)%creset'"
+# alias lg="git log --graph --date=relative --abbrev-commit --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Creset %s%Cgreen(%cr)%creset'"
+alias lg="git log --graph --date=relative --abbrev-commit --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %C(bold blue)%an%Creset - %C(white)%s%Creset %C(green)(%cr)%Creset'"
 alias gd="git diff --color | diff-so-fancy"
 
 # Set list of themes to pick from when loading at random
