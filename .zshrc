@@ -20,7 +20,6 @@ ZSH_THEME="agnoster"
 # Conveniance
 alias v="nvim"
 alias zshrc="nvim ~/.zshrc && source ~/.zshrc"
-alias cls="clear"
 alias upgrate="sudo apt update && sudo apt upgrade"
 alias ..="cd .."
 alias list="ls -lh"
@@ -33,6 +32,7 @@ alias del="rm"
 alias copy="cp"
 alias move="mv"
 alias del="rm"
+alias cls="clear"
 
 # Network
 alias myip="curl ipinfo.io/ip"
@@ -52,6 +52,8 @@ alias download='aria2c -x 16 -s 16 -k 1M --auto-file-renaming=false --summary-in
 # System
 alias off="sudo shutdown now"
 alias firmware="systemctl reboot --firmware-setup"
+alias bat_old="upower -i $(upower -e | grep 'BAT') | grep -E 'percentage'"
+alias bat="acpi -a -b -t"
 
 # Git
 alias lg="git log --graph --date=relative --abbrev-commit --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Creset %s%Cgreen(%cr)%creset'"
