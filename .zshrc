@@ -26,6 +26,7 @@ alias list="ls -lh"
 alias nvInit="nvim ~/.config/nvim/init.lua"
 alias home="cd ~"
 alias pfind="ps aux | grep "
+alias :q="clear"
 
 # Windows Alias
 alias del="rm"
@@ -37,6 +38,7 @@ alias cls="clear"
 # Network
 alias myip="curl ipinfo.io/ip"
 alias myipmore="curl -H 'X-Api-Key: REDACTED' https://api.api-ninjas.com/v1/iplookup\?address=$(curl -s ipinfo.io/ip)"
+# alias sendip="curl -X POST -H 'Content-Type: application/json' -d '{\"content\": $(curl ipinfo.io/ip)}' https://discord.com/api/webhooks/1280596126021718088/sNHMBgBwzXW7KquG6_q89pQMY1UTp5AeSGvIxolzyWhKxnlPCOWgEuFkNCVUE_6RTEHo" 
 alias ports="netstat -tulanp"
 alias ipinfo="ip -c a"
 alias nmapGateway="nmap -A 192.168.0.1"
@@ -50,6 +52,11 @@ alias trace="traceroute"
 alias nmapStealth="sudo nmap -sS"
 alias download='aria2c -x 16 -s 16 -k 1M --auto-file-renaming=false --summary-interval=0 --continue=true --retry-wait=5 --max-tries=3'
 alias dad="curl -H 'Accept: text/plain' https://icanhazdadjoke.com/; echo"
+
+sendip() {
+    local ip=$(curl -s ipinfo.io/ip)
+    curl -X POST -H 'Content-Type: application/json' -d "{\"content\": \"$ip\"}" "https://discord.com/api/webhooks/1280596126021718088/sNHMBgBwzXW7KquG6_q89pQMY1UTp5AeSGvIxolzyWhKxnlPCOWgEuFkNCVUE_6RTEHo"
+}
 
 # System
 alias off="sudo shutdown now"
