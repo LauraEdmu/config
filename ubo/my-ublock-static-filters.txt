@@ -1,7 +1,16 @@
+! Personal Preference
+||yahoo.com^ # just spam and useless stuff from yahoo honestly
+
+! TLDs to block
+||zip^
+||mov^
+||tk^ # these are often handed out for free, so might be a good idea to block them generally
+
 ! Bad pirate sites
-||1377x.to^
+||1377x.to^ # mispelling of 1337x.to
 ||1337x.eu
-||kickasstorrents.to^
+||1337x.so # now untrusted version of 1337x, since they let it expire
+||kickasstorrents.to^ # deprecated
 ||rargb.to^
 ||thepiratebay.org^
 ||therarbg.com
@@ -19,13 +28,11 @@
 ||google-analytics.com^$3p
 ||googletagmanager.com^$3p
 ||googleadservices.com^$3p
-
-! This one is disabled, as it might break some fonts or assets
-!||gstatic.com^$3p
+!||gstatic.com^$3p # This one is disabled, as it might break some fonts or assets
 
 
 ! 3rd party blocks
-||facebook.net^$domain=downdetector.com|downdetector.co.uk
+||facebook.net^$domain=downdetector.com|downdetector.co.uk # block facebook.net FROM downdetector
 ||facebook.com^$3p
 ||twitter.com^$3p
 ||instagram.com^$3p
