@@ -1,0 +1,127 @@
+! Bad pirate sites
+||1377x.to^
+||1337x.eu
+||kickasstorrents.to^
+||rargb.to^
+||thepiratebay.org^
+||therarbg.com
+||rarbg.club^
+||torrentlite.org^
+||zlibrary.to^
+||igg-games.com^
+||nexus-games.net^
+||steam-repacks.com^
+||steamunlocked.net^
+||getintopc.com^
+||imgadult.com^
+
+! google track
+||google-analytics.com^$3p
+||googletagmanager.com^$3p
+||googleadservices.com^$3p
+
+! This one is disabled, as it might break some fonts or assets
+!||gstatic.com^$3p
+
+
+! 3rd party blocks
+||facebook.net^$domain=downdetector.com|downdetector.co.uk
+||facebook.com^$3p
+||twitter.com^$3p
+||instagram.com^$3p
+||linkedin.com^$3p
+||reddit.com^$3p
+||pinterest.com^$3p
+||snapchat.com^$3p
+||x.com^$3p
+||wix.com^$3p
+
+! shortners
+||bit.ly^$3p
+||tinyurl.com^$3p
+||ow.ly^$3p
+
+! ad link sites
+||adfoc.us^
+||adf.ly^
+||linkvertise.com^
+||outbrain.com^
+||taboola.com^
+||doubleclick.net^
+||criteo.com^
+
+! loggers
+||grabify.link^
+||grabify.com^
+||grabify.org^
+||grabify.net^
+||grabify.io^
+||grabify.tk^
+||grabify.link^
+||iplogger.org^
+||blasze.com^
+||yip.su^
+||ps3cfw.com^
+||youtubetomp3music.com^
+
+! malicious
+||trackyourparcel.net^
+||ytrack.me^
+||trackingclick.net^
+||bittly.io^
+
+
+! misc
+||buy.tinypass.com/checkout/template/cacheableShow?aid=bbrG810kpu&templateId=OTD8G8254XRD&offerId=fakeOfferId&experienceId=EXOZ2IBAXJPQ&iframeId=offer_921e500fdab2dcc9544b-0&displayMode=inline&pianoIdUrl=https%3A%2F%2Fid.tinypass.com%2Fid%2F&widget=template&url=https%3A%2F%2Fwww.bordertelegraph.com$subdocument
+duckduckgo.com##a:has-text(/Help Spread DuckDuckGo!/i)
+||donorbox.org/free-music-archive-next?default_interval=o&modal=true$subdocument
+www.reddit.com##.box-border.px-md.mt-xs.xl\:max-w-container-xl.m-auto.l\:max-w-container-l.w-100
+www.nhs.uk##.nhsuk-cookie-banner
+freesound.org##.toast
+www.xvideos.com##.premium-results-line
+www.gstatic.com/cv/js/sender/v1/cast_sender.js$script,redirect=noop.js,domain=www.xvideos.com
+||audiobookbay.lu/images/d-r.gif$image
+||profitablegatecpm.com^
+||7eer.net^
+bandle.app##.mantine-x9ks7r.mantine-Stack-root
+guessthe.game##.kufi-right.kufi-button
+framed.wtf##.bg-slate-900 > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)
+www.wikihow.com###article_courses_banner
+
+! 2024-04 https://www.deviantart.com
+www.deviantart.com##._2Ee-T.v0vmd._3U8hI._3272G:has-text(/Treat yourself/i)
+||www.deviantart.com/_nsfgfb/?realEstateId=7762cc44-45ad-436a-b170-f4dc4426f5ae&theme=dark&userGuid=4bf1beff-eb0a-4223-9456-fdb40ba29834&biClientId=484bdf32-91b3-0036-2412-cb98f69dbf5c&biClientIdSigned=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJiaUNsaWVudElkIjoiNDg0YmRmMzItOTFiMy0wMDM2LTI0MTItY2I5OGY2OWRiZjVjIiwidHMiOjE3MTMwNTIwNzgsInVzZXJVdWlkIjoiNGJmMWJlZmYtZWIwYS00MjIzLTk0NTYtZmRiNDBiYTI5ODM0In0.Br8sIS0xcvGAwoTHj_rFBylawrD4IowQ6zvPQ5mVzFY&newApi=2&platform=desktop$subdocument
+
+
+! 2024-04 https://pixabay.com
+||pixabay.com/static/img/publisher/premiumbeat_banner_*_2.png$image
+pixabay.com##.container--qiTbg > .container--Kkxxi > a[href="https://shutterstock.7eer.net/c/44814/611444/1305"] > .promoLink--7Oa3v.ua-banner-ad-premiumbeat-offer
+pixabay.com##a:has-text(/Premium ?Beat/i)
+pixabay.com##a:has-text(/DEAL: \d{2}%/i)
+||istockphoto.com^$domain=pixabay.com
+pixabay.com##.mainSectionGroup--DfLUW > .adsSection--e-2xK > .container--t3k85
+
+! 2024-04 Youtube
+www.youtube.com##ytd-message-renderer.ytd-live-chat-frame.style-scope:has-text(/replay is not available/i)
+www.youtube.com##ytd-reel-shelf-renderer.ytd-item-section-renderer.style-scope
+
+! -------- Notes --------
+! :has-text(the text) can use this to white list after picking an element. Can use regex! and i and/or m tags, after last slash
+! https://github.com/gorhill/uBlock/wiki/Procedural-cosmetic-filters#subjecthas-textneedle
+! ||istockphoto.com^$image,domain=pixabay.com    blocks image requests to istockphoto.com from pixaby
+! ||istockphoto.com^$domain=pixabay.com    blocks all requests to istockphoto.com from pixaby
+! script redirect to no op example: ||example.com/script.js$script,redirect=noop.js
+! ||example.com/*.js$1p,script,redirect=noopjs:100
+! ||reddit.com/*.js$3p,script,redirect=noop.js:100
+! ||reddit.com/$3p,script,redirect=noop.js:100    Blocks reddit scripts when not on reddit
+! ||reddit.com/$1p,script,redirect=noop.js:100    Blocks reddit scripts only when on reddit
+! -------- Notes End --------
+
+! 2024-05-22 https://www.reddit.com
+www.reddit.com##alert-controller
+
+! 9 Jul 2024 https://www.merriam-webster.com
+www.merriam-webster.com##.bg-white.overflow-hidden.position-absolute.pb-3.shadow.flex-column.justify-content-between.flex-row.menu-list-items.submenu.dropdown-menu
+
+! 30 Jul 2024 https://www.dictionary.com
+www.dictionary.com##.ac-floated-player.ac-player-wrapper
