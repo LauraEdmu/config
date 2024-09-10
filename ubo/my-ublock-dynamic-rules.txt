@@ -1,0 +1,26 @@
+no-cosmetic-filtering: w14.monkrus.ws true
+no-csp-reports: * true
+no-large-media: behind-the-scene false
+no-popups: 1337x.so true
+no-popups: 1337x.st true
+no-popups: 1337x.to true
+no-popups: www.bordertelegraph.com true
+no-popups: coomer.su true
+no-popups: kemono.su true
+no-popups: w14.monkrus.ws true
+no-popups: thothub.to true
+no-popups: watchsomuch.to true
+no-popups: x1337x.cc true
+no-popups: x1337x.eu true
+no-popups: x1337x.se true
+no-popups: x1337x.ws true
+no-popups: yts.mx true
+no-remote-fonts: w14.monkrus.ws true
+behind-the-scene * * noop
+behind-the-scene * 1p-script noop
+behind-the-scene * 3p noop
+behind-the-scene * 3p-frame noop
+behind-the-scene * 3p-script noop
+behind-the-scene * image noop
+behind-the-scene * inline-script noop
+moviegrid.io * 3p block
