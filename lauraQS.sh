@@ -20,7 +20,7 @@ sudo mkdir -p /root/.ssh
 sudo chmod 700 /root/.ssh
 
 # Download SSH public key from GitHub and add to root's authorized_keys
-sudo curl -s https://raw.githubusercontent.com/LauraEdmu/config/master/pub_keys/id_ed25519.pub -o /root/.ssh/authorized_keys
+sudo curl -s https://raw.githubusercontent.com/LauraEdmu/config/master/pub_keys/icedphoenix.pub -o /root/.ssh/authorized_keys
 sudo chmod 600 /root/.ssh/authorized_keys
 
 # Make SSH directory for user "laura" and set permissions
@@ -28,7 +28,7 @@ sudo mkdir -p /home/laura/.ssh
 sudo chmod 700 /home/laura/.ssh
 
 # Add the same SSH public key to the new user's authorized_keys
-sudo curl -s https://raw.githubusercontent.com/LauraEdmu/config/master/pub_keys/id_ed25519.pub -o /home/laura/.ssh/authorized_keys
+sudo curl -s https://raw.githubusercontent.com/LauraEdmu/config/master/pub_keys/icedphoenix.pub -o /home/laura/.ssh/authorized_keys
 sudo chmod 600 /home/laura/.ssh/authorized_keys
 sudo chown -R laura:laura /home/laura/.ssh
 
