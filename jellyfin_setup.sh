@@ -17,16 +17,6 @@ else
     echo "Jellyfin is already installed!"
 fi
 
-# Wait for Jellyfin to start before modifying the configuration
-sudo systemctl start jellyfin
-sleep 5
-
-# Change Jellyfin port to 80 in the configuration file
-sudo sed -i 's/8096/80/' /etc/jellyfin/network.xml
-
-# Restart Jellyfin to apply the changes
-sudo systemctl restart jellyfin
-
 # Create media directories
 sudo mkdir -p /media/movies /media/tv /media/books /media/music
 
@@ -34,4 +24,7 @@ sudo mkdir -p /media/movies /media/tv /media/books /media/music
 sudo chown -R jellyfin:jellyfin /media
 sudo chmod -R 755 /media
 
-echo "Script has finished!"
+# Allow jellyfin to bind port 80
+sudo setcap 'cap_net_bind_service=+ep' /usr/lib/jellyfin/bin/jellyfin
+
+echo "Script has finished! Once you've configured it, you can run sed -i 's/8096/80/' /etc/jellyfin/network.xml to change port"
