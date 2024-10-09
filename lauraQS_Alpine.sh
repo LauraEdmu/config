@@ -4,7 +4,10 @@
 apk update && apk upgrade
 
 # Install necessary packages including common Linux utilities
-apk add ufw neovim curl git fail2ban upower fzf htop sudo bash openssh util-linux
+apk add bash ufw neovim curl git fail2ban upower fzf htop sudo openssh util-linux
+
+# Make bash the default shell for root
+chsh -s /bin/bash root
 
 # Create a new user "laura" without a password and add to wheel (sudo) group
 adduser -D -s /bin/bash laura
@@ -55,8 +58,7 @@ curl -s https://raw.githubusercontent.com/LauraEdmu/config/master/.bashrc -o /ho
 # Ensure laura owns all files in her home directory
 chown -R laura:laura /home/laura
 
-# Source the new bashrc
+# Source the new bashrc for root
 source /root/.bashrc
-source /home/laura/.bashrc
 
 echo "Setup complete! A system reboot is recommended to apply all changes."
