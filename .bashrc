@@ -44,7 +44,6 @@ sendip() {
 # System
 alias off="sudo shutdown now"
 alias firmware="systemctl reboot --firmware-setup"
-alias bat_old="upower -i $(upower -e | grep 'BAT') | grep -E 'percentage'"
 alias bat="acpi -a -b -t"
 
 # Git
