@@ -39,7 +39,7 @@ sudo systemctl restart ssh
 
 # Enable and configure UFW, allowing SSH (port 22) only
 sudo ufw allow proto tcp from any to any port 22
-sudo ufw --force enable
+#sudo ufw --force enable
 
 # Enable and start Fail2Ban for SSH protection
 sudo systemctl enable fail2ban
@@ -69,4 +69,4 @@ sudo chown -R laura:laura /home/laura
 
 sudo source ~/.bashrc
 
-echo "Setup complete! A system reboot is recommended to apply all changes."
+echo "Setup complete! You may now want to Enable UFW (Already configured) A system reboot is recommended to apply all changes."

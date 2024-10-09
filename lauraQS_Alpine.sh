@@ -42,7 +42,8 @@ rc-service sshd restart
 
 # Enable and configure UFW, allowing SSH (port 22) only
 ufw allow proto tcp from any to any port 22
-ufw --force enable
+# ufw --force enable
+rc-update add ufw
 
 # Enable and start Fail2Ban for SSH protection
 rc-update add fail2ban
@@ -61,4 +62,4 @@ chown -R laura:laura /home/laura
 # Source the new bashrc for root
 source /root/.bashrc
 
-echo "Setup complete! A system reboot is recommended to apply all changes."
+echo "Setup complete! You may now want to Enable UFW (Already configured) A system reboot is recommended to apply all changes."
