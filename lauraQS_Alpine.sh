@@ -42,7 +42,7 @@ rc-service sshd restart
 
 # Enable and configure UFW, allowing SSH (port 22) only
 ufw allow proto tcp from any to any port 22
-ufw enable
+ufw --force enable
 
 # Enable and start Fail2Ban for SSH protection
 rc-update add fail2ban
