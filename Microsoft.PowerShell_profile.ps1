@@ -22,6 +22,21 @@ function fuzzdir {
     }
 }
 
+function fuzzexe {
+    $exe = Get-CimInstance Win32_Process |
+        Where-Object ExecutablePath |
+        ForEach-Object ExecutablePath |
+        fzf |
+        ForEach-Object { Split-Path $_ -Leaf }
+
+    if ($exe) {
+        Set-Clipboard -Value $exe
+        Write-Host "Copied to clipboard: $exe"
+    } else {
+        Write-Host "No selection made."
+    }
+}
+
 
 function lg {
     git log --graph --date=relative --abbrev-commit --pretty=format:"`e[31m%h`e[0m -`e[33m%d`e[0m `e[1;34m%an`e[0m - `e[37m%s`e[0m `e[32m(%cr)`e[0m `e[36m%G?`e[0m"
