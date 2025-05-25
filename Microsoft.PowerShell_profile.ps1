@@ -1,6 +1,7 @@
 Import-Module PSFzf # run "Install-Module -Name PSFzf -Scope CurrentUser" before first use, after choco install fzf
 
 Set-PSReadLineKeyHandler -Chord "Ctrl+r" -ScriptBlock { Invoke-FuzzyHistory }
+Set-Alias -Name npp -Value "C:\Program Files\Notepad++\notepad++.exe" 
 
 function fuzzdir {
     <#
