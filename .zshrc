@@ -81,6 +81,18 @@ fuzzdir() {
   fi
 }
 
+fuzzexe() {
+  local selected exe
+
+  selected=$(ps -eo args= | grep '/' | fzf)
+
+  if [[ -n "$selected" ]]; then
+    exe=$(echo "$selected" | awk '{print $1}' | sed 's/.*\///')
+    echo "$exe"
+  else
+    echo "No selection made."
+  fi
+}
 
 # System
 alias off="sudo shutdown now"
