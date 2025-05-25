@@ -1,3 +1,6 @@
+Import-Module PSFzf # run "Install-Module -Name PSFzf -Scope CurrentUser" before first use, after choco install fzf
+
+Set-PSReadLineKeyHandler -Chord "Ctrl+r" -ScriptBlock { Invoke-FuzzyHistory }
 
 function lg {
     git log --graph --date=relative --abbrev-commit --pretty=format:"`e[31m%h`e[0m -`e[33m%d`e[0m `e[1;34m%an`e[0m - `e[37m%s`e[0m `e[32m(%cr)`e[0m `e[36m%G?`e[0m"
@@ -30,3 +33,16 @@ if (Test-Path($ChocolateyProfile)) {
 function myip {
     (Invoke-RestMethod -Uri 'https://ipinfo.io/ip').Trim()
 }
+
+function localip {
+    (Get-NetIPAddress -AddressFamily IPv4 | Where-Object {
+        $_.IPAddress -notlike '169.*' -and $_.IPAddress -ne '127.0.0.1'
+    }).IPAddress
+}
+
+function localipmore {
+    Get-NetIPAddress -AddressFamily IPv4 | Where-Object {
+        $_.IPAddress -notlike '169.*' -and $_.IPAddress -ne '127.0.0.1'
+    } | Select-Object InterfaceAlias, IPAddress
+}
+
