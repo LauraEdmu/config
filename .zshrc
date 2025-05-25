@@ -65,7 +65,7 @@ sendip() {
 # System
 alias off="sudo shutdown now"
 alias firmware="systemctl reboot --firmware-setup"
-alias bat_old="upower -i $(upower -e | grep 'BAT') | grep -E 'percentage'"
+# alias bat_old="upower -i $(upower -e | grep 'BAT') | grep -E 'percentage'"
 alias bat="acpi -a -b -t"
 
 # Git
@@ -169,3 +169,21 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Alternative fzf cd widget that includes hidden dirs
+fzf_cd_hidden() {
+  local dir
+  dir=$(command find . -type d 2> /dev/null | sed "s|^\./||" | fzf +m) && cd "$dir"
+}
+zle -N fzf_cd_hidden
+bindkey '^[d' fzf_cd_hidden  # Alt-d
+
+lhelp() {
+  local helpfile="$HOME/.zsh_help"
+
+  if [[ -f "$helpfile" ]]; then
+    less -R "$helpfile"        # -R keeps ANSI colours, if you add any
+  else
+    printf "%s\n" "⛔  No .zsh_help found in \$HOME – create one with your key-binds, aliases and functions."
+  fi
+}

@@ -1,0 +1,40 @@
+# Laura's ZSH Quick-Help
+
+**FZF key-bindings**  
+Ctrl-t   – Fuzzy-find files and insert their path  
+Alt-c    – Fuzzy-cd (jump into a selected directory)  
+Ctrl-r   – Fuzzy-search command history  
+Alt-d    – Fuzzy-cd including hidden dirs (custom wrapper)
+
+**Every-day aliases**  
+..            → cd ..  
+:q            → clear  
+bat           → acpi -a -b -t                 # Battery + temp  
+cls           → clear                         # Muscle-memory from Windows  
+v             → nvim                          # Open NeoVim  
+zshrc         → nvim ~/.zshrc && source ~/.zshrc  
+
+**Package helpers**  
+upgrate       → sudo apt update && sudo apt upgrade  
+aptdeps       → sudo apt-get install -f  
+aptfix        → sudo apt --fix-broken install  
+
+**Git shortcuts**  
+lg            → git log --graph --oneline --decorate  
+gd            → git diff --color | diff-so-fancy  
+pull          → git pull  
+
+**Networking**  
+myip          → curl ipinfo.io/ip  
+ports         → netstat -tulanp  
+nmapQuick     → nmap -F  
+trace         → traceroute  
+
+**Fun & misc**  
+dad           – Get a random dad joke  
+speed         – speedtest-cli  
+firmware      – systemctl reboot --firmware-setup  
+
+**Custom functions**  
+fzf_cd_hidden – Implementation behind Alt-d (see ~/.zshrc)  
+sendip        – Post your public IP to your webhook
