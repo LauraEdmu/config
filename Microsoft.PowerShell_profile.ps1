@@ -2,6 +2,26 @@ Import-Module PSFzf # run "Install-Module -Name PSFzf -Scope CurrentUser" before
 
 Set-PSReadLineKeyHandler -Chord "Ctrl+r" -ScriptBlock { Invoke-FuzzyHistory }
 
+function fuzzdir {
+    <#
+    .SYNOPSIS
+        Uses fzf to select a directory path and copies it to clipboard.
+
+    .DESCRIPTION
+        Recursively lists all directories, lets you choose one via fzf, and copies the full path to the clipboard.
+
+    .EXAMPLE
+        Copy-DirPathFromFzf
+    #>
+    $selected = Get-ChildItem -Directory -Recurse | Select-Object -ExpandProperty FullName | fzf
+    if ($selected) {
+        $selected | Set-Clipboard
+        Write-Host "Copied to clipboard:" -ForegroundColor Green
+        Write-Host $selected
+    }
+}
+
+
 function lg {
     git log --graph --date=relative --abbrev-commit --pretty=format:"`e[31m%h`e[0m -`e[33m%d`e[0m `e[1;34m%an`e[0m - `e[37m%s`e[0m `e[32m(%cr)`e[0m `e[36m%G?`e[0m"
 }

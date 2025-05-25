@@ -64,6 +64,24 @@ sendip() {
     curl -X POST -H 'Content-Type: application/json' -d "{\"content\": \"$ip\"}" "https://discord.com/api/webhooks/1280596126021718088/sNHMBgBwzXW7KquG6_q89pQMY1UTp5AeSGvIxolzyWhKxnlPCOWgEuFkNCVUE_6RTEHo"
 }
 
+fuzzdir() {
+  local selected
+  selected=$(find . -type d 2>/dev/null | fzf)
+
+  if [[ -n "$selected" ]]; then
+    if command -v xclip &>/dev/null; then
+      printf '%s' "$selected" | xclip -selection clipboard
+      echo "Copied to clipboard: $selected"
+    elif command -v pbcopy &>/dev/null; then
+      printf '%s' "$selected" | pbcopy
+      echo "Copied to clipboard: $selected"
+    else
+      echo "No clipboard tool found (need xclip or pbcopy)"
+    fi
+  fi
+}
+
+
 # System
 alias off="sudo shutdown now"
 alias firmware="systemctl reboot --firmware-setup"
