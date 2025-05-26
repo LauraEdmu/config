@@ -219,3 +219,6 @@ lhelp() {
     printf "%s\n" "⛔  No .zsh_help found in \$HOME – create one with your key-binds, aliases and functions."
   fi
 }
+
+unalias z 2>/dev/null # remove z alias of other plugin
+eval "$(zoxide init zsh)" # use this after apt install zoxide

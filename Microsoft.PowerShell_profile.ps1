@@ -82,3 +82,4 @@ function localipmore {
     } | Select-Object InterfaceAlias, IPAddress
 }
 
+Invoke-Expression (& { (zoxide init powershell | Out-String) }) # after doing choco install zoxide
