@@ -4,6 +4,9 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$HOME/bin:$PATH"
+export VISUAL=nvim
+export EDITOR=nvim
+export PATH="$HOME/.cargo/bin:$PATH" # make rust cargo bins accessible
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -30,6 +33,7 @@ alias :q="clear"
 alias kern="uname -a"
 alias aptfix="sudo apt --fix-broken install"
 alias aptdeps="sudo apt-get install -f"
+alias nvimsudo="EDITOR=nvim visudo"
 
 # Windows Alias
 alias del="rm"
@@ -58,6 +62,9 @@ alias nmapStealth="sudo nmap -sS"
 alias download='aria2c -x 16 -s 16 -k 1M --auto-file-renaming=false --summary-interval=0 --continue=true --retry-wait=5 --max-tries=3'
 alias dad="curl -H 'Accept: text/plain' https://icanhazdadjoke.com/; echo"
 alias interfaces="ip link show"
+
+# Setup
+alias get_rust="curl https://sh.rustup.rs -sSf | sh"
 
 sendip() {
     local ip=$(curl -s ipinfo.io/ip)
