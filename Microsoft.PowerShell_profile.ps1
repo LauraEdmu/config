@@ -3,6 +3,24 @@ Import-Module PSFzf # run "Install-Module -Name PSFzf -Scope CurrentUser" before
 Set-PSReadLineKeyHandler -Chord "Ctrl+r" -ScriptBlock { Invoke-FuzzyHistory }
 Set-Alias -Name npp -Value "C:\Program Files\Notepad++\notepad++.exe" 
 
+function Get-DiskHuman {
+    Get-Disk | Select-Object Number, FriendlyName, SerialNumber,
+        @{Name="Size(GB)"; Expression={"{0:N2}" -f ($_.Size / 1GB)}}
+}
+
+function Get-PartitionHuman {
+    Get-Partition | Select-Object DiskNumber, PartitionNumber, DriveLetter,
+        @{Name="Size(GB)"; Expression={"{0:N2}" -f ($_.Size / 1GB)}},
+        Type
+}
+
+function Get-VolumeHuman {
+    Get-Volume | Select-Object DriveLetter, FileSystemLabel, FileSystem,
+        @{Name="Used(GB)"; Expression={"{0:N2}" -f (($_.Size - $_.SizeRemaining) / 1GB)}},
+        @{Name="Free(GB)"; Expression={"{0:N2}" -f ($_.SizeRemaining / 1GB)}},
+        @{Name="Total(GB)"; Expression={"{0:N2}" -f ($_.Size / 1GB)}}
+}
+
 function fuzzdir {
     <#
     .SYNOPSIS
