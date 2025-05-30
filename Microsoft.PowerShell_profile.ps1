@@ -21,6 +21,35 @@ function Get-VolumeHuman {
         @{Name="Total(GB)"; Expression={"{0:N2}" -f ($_.Size / 1GB)}}
 }
 
+function lsblk {
+    $disks = Get-Disk | Sort-Object Number
+    $partitions = Get-Partition
+    $volumes = Get-Volume
+
+    foreach ($disk in $disks) {
+        $diskNum = $disk.Number
+        $diskName = $disk.FriendlyName
+        $diskSize = "{0:N2} GB" -f ($disk.Size / 1GB)
+        Write-Host "Disk $diskNum - $diskName ($diskSize)" -ForegroundColor Cyan
+
+        $diskParts = $partitions | Where-Object { $_.DiskNumber -eq $diskNum } | Sort-Object PartitionNumber
+
+        foreach ($part in $diskParts) {
+            $partNum = $part.PartitionNumber
+            $drive = if ($part.DriveLetter) { "$($part.DriveLetter):" } else { "-" }
+            $size = "{0:N2} GB" -f ($part.Size / 1GB)
+            $type = $part.Type
+            $volLabel = ($volumes | Where-Object { $_.DriveLetter -eq $part.DriveLetter }).FileSystemLabel
+
+            $labelDisplay = if ($volLabel) { " [$volLabel]" } else { "" }
+
+            Write-Host " └─ Partition $partNum ($drive, $type, $size)$labelDisplay" -ForegroundColor Gray
+        }
+
+        Write-Host ""
+    }
+}
+
 function fuzzdir {
     <#
     .SYNOPSIS
