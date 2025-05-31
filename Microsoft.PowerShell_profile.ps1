@@ -1,4 +1,11 @@
 Import-Module PSFzf # run "Install-Module -Name PSFzf -Scope CurrentUser" before first use, after choco install fzf
+Import-Module Terminal-Icons # after running "Install-Module -Name Terminal-Icons -Scope CurrentUser -Force"
+
+# oh-my-posh configs. Requires "winget install JanDeDobbeleer.OhMyPosh -s winget
+# Themes at: https://ohmyposh.dev/docs/themes
+# oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\tokyo.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\agnoster.omp.json" | Invoke-Expression
+# oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\kali.omp.json" | Invoke-Expression
 
 Set-PSReadLineKeyHandler -Chord "Ctrl+r" -ScriptBlock { Invoke-FuzzyHistory }
 Set-Alias -Name npp -Value "C:\Program Files\Notepad++\notepad++.exe" 
