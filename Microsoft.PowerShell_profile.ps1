@@ -1,14 +1,34 @@
 Import-Module PSFzf # run "Install-Module -Name PSFzf -Scope CurrentUser" before first use, after choco install fzf
 Import-Module Terminal-Icons # after running "Install-Module -Name Terminal-Icons -Scope CurrentUser -Force"
 
+Set-Alias -Name btop -Value "C:\Users\laura\Documents\Portable Software\btop4win\btop4win.exe"
+
 # oh-my-posh configs. Requires "winget install JanDeDobbeleer.OhMyPosh -s winget
 # Themes at: https://ohmyposh.dev/docs/themes
 # oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\tokyo.omp.json" | Invoke-Expression
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\agnoster.omp.json" | Invoke-Expression
-# oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\kali.omp.json" | Invoke-Expression
+# oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\agnoster.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\kali.omp.json" | Invoke-Expression
 
 Set-PSReadLineKeyHandler -Chord "Ctrl+r" -ScriptBlock { Invoke-FuzzyHistory }
 Set-Alias -Name npp -Value "C:\Program Files\Notepad++\notepad++.exe" 
+
+function Write-Playlist {
+    param (
+        [string]$Pattern = '*',
+        [string]$Output = 'playlist.m3u'
+    )
+    Get-ChildItem -Filter $Pattern | Select-Object -ExpandProperty Name | Set-Content -Encoding UTF8 -Path $Output
+    Write-Host "▶️ Playlist written to '$Output' using relative names."
+}
+
+function Write-PlaylistFull {
+    param (
+        [string]$Pattern = '*',
+        [string]$Output = 'playlist.m3u'
+    )
+    Get-ChildItem -Filter $Pattern | Select-Object -ExpandProperty FullName | Set-Content -Encoding UTF8 -Path $Output
+    Write-Host "📂 Playlist written to '$Output' using full paths."
+}
 
 function Get-DiskHuman {
     Get-Disk | Select-Object Number, FriendlyName, SerialNumber,
@@ -137,3 +157,45 @@ function localipmore {
 }
 
 Invoke-Expression (& { (zoxide init powershell | Out-String) }) # after doing choco install zoxide
+function Set-Location {
+    [CmdletBinding(DefaultParameterSetName='Path')]
+    param(
+        [Parameter(Position=0, ParameterSetName='Path')]
+        [string]$Path,
+
+        [Parameter(Position=0, ParameterSetName='LiteralPath')]
+        [string]$LiteralPath,
+
+        [switch]$PassThru
+    )
+
+    $usedPath = if ($PSCmdlet.ParameterSetName -eq 'LiteralPath') {
+        $LiteralPath
+    } else {
+        $Path
+    }
+
+    if ([string]::IsNullOrWhiteSpace($usedPath)) {
+        $usedPath = '~'
+    }
+
+    try {
+        $resolved = Resolve-Path -LiteralPath $usedPath -ErrorAction Stop
+        zoxide add $resolved.ProviderPath
+    } catch {
+        # Silently ignore tracking errors
+    }
+
+    $args = @{}
+    if ($PSCmdlet.ParameterSetName -eq 'LiteralPath') {
+        $args['LiteralPath'] = $LiteralPath
+    } else {
+        $args['Path'] = $Path
+    }
+    if ($PassThru) {
+        $args['PassThru'] = $true
+    }
+
+    Microsoft.PowerShell.Management\Set-Location @args
+}
+
