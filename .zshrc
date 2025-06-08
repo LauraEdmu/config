@@ -34,6 +34,7 @@ alias kern="uname -a"
 alias aptfix="sudo apt --fix-broken install"
 alias aptdeps="sudo apt-get install -f"
 alias nvimsudo="EDITOR=nvim visudo"
+alias lsfuzz="ls | fzf --preview='bat --style=numbers --color=always {}'"
 
 # Windows Alias
 alias del="rm"
