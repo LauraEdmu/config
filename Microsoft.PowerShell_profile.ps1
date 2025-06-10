@@ -11,6 +11,7 @@ oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\kali.omp.json" | Invoke-Exp
 
 Set-PSReadLineKeyHandler -Chord "Ctrl+r" -ScriptBlock { Invoke-FuzzyHistory }
 Set-Alias -Name npp -Value "C:\Program Files\Notepad++\notepad++.exe" 
+Set-Alias -Name reboot -Value "Restart-Computer"
 
 function Write-Playlist {
     param (
