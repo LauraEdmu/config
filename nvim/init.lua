@@ -1,88 +1,79 @@
--- vim-plug plugin setup
-vim.cmd([[
-call plug#begin('~/.vim/plugged')
 
-" List your plugins here
-Plug 'preservim/nerdtree' " File explorer
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy finder
-Plug 'junegunn/fzf.vim'
-Plug 'rebelot/kanagawa.nvim'
-Plug 'tpope/vim-commentary'
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git", "clone", "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-call plug#end()
-]])
--- Plug 'folke/which-key.nvim'
+-- Plugins
+require("lazy").setup({
+  { "preservim/nerdtree" },
+  { "junegunn/fzf", build = function() vim.fn["fzf#install"]() end },
+  { "junegunn/fzf.vim" },
+  { "rebelot/kanagawa.nvim" },
+  { "tpope/vim-commentary" },
+  -- { "folke/which-key.nvim" }, -- optional: you had this commented out
+})
 
--- Theme enable
-vim.cmd('syntax enable')
-vim.o.background = 'dark'
-vim.cmd('colorscheme kanagawa-wave') -- wave = dark, dragon = darker, lotus = light
+-- Theme
+vim.cmd("syntax enable")
+vim.o.background = "dark"
+vim.cmd("colorscheme kanagawa-wave")
 
--- Set guifont
--- vim.o.guifont = 'FiraCode:h14'
-
--- Set line numbers
+-- Editor settings
 vim.wo.number = true
-
--- Enable syntax highlighting
-vim.cmd('syntax on')
-
--- Set tabs and indentation
+vim.wo.relativenumber = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
+vim.g.mapleader = " "
 
--- Enable relative line numbers
-vim.wo.relativenumber = true
+-- Key mappings
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
 
--- Remap leader key to space
-vim.g.mapleader = ' '
+-- Save with Ctrl+S
+map("n", "<C-s>", ":w<CR>", opts)
+map("i", "<C-s>", "<Esc>:w<CR>l", opts)
 
--- Save with Ctrl+s
-vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>l', { noremap = true, silent = true })
+-- Toggle NERDTree
+map("n", "<C-n>", ":NERDTreeToggle<CR>", opts)
 
--- Toggle NERDTree with Ctrl+n
-vim.api.nvim_set_keymap('n', '<C-n>', ':NERDTreeToggle<CR>', { noremap = true, silent = true })
+-- Fuzzy find
+map("n", "<C-p>", ":Files<CR>", opts)
+map("n", "<C-b>", ":Buffers<CR>", opts)
+map("n", "<C-f>", ":Rg<CR>", opts)
 
--- Fuzzy find files with Ctrl+p
-vim.api.nvim_set_keymap('n', '<C-p>', ':Files<CR>', { noremap = true, silent = true })
+-- Clear highlight
+map("n", "<A-h>", ":nohlsearch<CR>", opts)
 
--- Fuzzy find buffers with Ctrl+b
-vim.api.nvim_set_keymap('n', '<C-b>', ':Buffers<CR>', { noremap = true, silent = true })
+-- Swap lines
+map("n", "<C-j>", "ddp", opts)
+map("n", "<C-k>", "ddkP", opts)
 
--- Search project with Ctrl+f
-vim.api.nvim_set_keymap('n', '<C-f>', ':Rg<CR>', { noremap = true, silent = true })
+-- Clipboard yank/paste
+map("v", "<leader>y", '"+y', opts)
+map("n", "<leader>Y", '"+yg_', opts)
+map("n", "<leader>y", '"+y', opts)
+map("n", "<leader>p", '"+p', opts)
+map("n", "<leader>P", '"+P', opts)
 
--- remove highlighting with Alt-h
-vim.api.nvim_set_keymap('n', '<A-h>', ':nohlsearch<CR>', { noremap = true, silent = true })
+-- Open terminal
+map("n", "<leader>t", ":split | terminal<CR>", opts)
 
--- Swap the current line with the line below using <C-j>
-vim.api.nvim_set_keymap('n', '<C-j>', 'ddp', { noremap = true, silent = true })
+-- Resize splits
+map("n", "<C-Up>", ":resize +2<CR>", opts)
+map("n", "<C-Down>", ":resize -2<CR>", opts)
+map("n", "<C-Left>", ":vertical resize -2<CR>", opts)
+map("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
--- Swap the current line with the line above using <C-k>
-vim.api.nvim_set_keymap('n', '<C-k>', 'ddkP', { noremap = true, silent = true })
-
-
-
--- Copy to system clipboard
-vim.api.nvim_set_keymap('v', '<leader>y', '"+y', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>Y', '"+yg_', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>y', '"+y', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>p', '"+p', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>P', '"+P', { noremap = true, silent = true })
-
--- open terminal
-vim.api.nvim_set_keymap('n', '<leader>t', ':split | terminal<CR>', { noremap = true, silent = true })
-
--- resize splits
-vim.api.nvim_set_keymap('n', '<C-Up>', ':resize +2<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-Down>', ':resize -2<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-Left>', ':vertical resize -2<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-Right>', ':vertical resize +2<CR>', { noremap = true, silent = true })
-
--- navigate splits
-vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
+-- Navigate splits
+map("n", "<C-h>", "<C-w>h", opts)
+map("n", "<C-j>", "<C-w>j", opts)
+map("n", "<C-k>", "<C-w>k", opts)
+map("n", "<C-l>", "<C-w>l", opts)
