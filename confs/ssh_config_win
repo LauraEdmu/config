@@ -1,0 +1,48 @@
+#  Github LauraEdmu
+Host github.com-laura
+    HostName github.com
+    User git
+    IdentityFile C:/Users/Laura/.ssh/id_ed25519
+
+#  Github IcedPhoenix49
+Host github.com-iced
+    HostName github.com
+    User git
+    IdentityFile C:\Users\laura\Documents\ssh\id_rsa_icedphoenix49
+
+Host asp-laura
+    HostName 192.168.0.20
+    User cmd.exe
+    IdentityFile C:/Users/Laura/.ssh/id_ed25519
+
+Host asp
+    HostName 192.168.0.187
+    User laura
+    IdentityFile C:\Users\laura\.ssh\id_ed25519
+
+Host linode
+	HostName lish-gb-lon.linode.com
+	User LauraEdmu
+	IdentityFile C:/Users/Laura/.ssh/id_ed25519
+
+Host webhost
+	HostName 172.236.20.34
+	User webhost
+	IdentityFile C:/Users/Laura/.ssh/id_ed25519
+
+Host lilnode
+	HostName 172.236.3.200
+	User root
+	IdentityFile C:/Users/Laura/.ssh/id_ed25519
+	
+Host kit
+	HostName Kitsune
+	User root
+	IdentityFile C:/Users/Laura/.ssh/id_ed25519
+	
+Host vm
+    HostName localhost
+    Port 2244
+    User root
+    StrictHostKeyChecking no
+    UserKnownHostsFile NUL
