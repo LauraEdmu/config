@@ -106,7 +106,8 @@ fuzzexe() {
 alias off="sudo shutdown now"
 alias firmware="systemctl reboot --firmware-setup"
 # alias bat_old="upower -i $(upower -e | grep 'BAT') | grep -E 'percentage'"
-alias bat="acpi -a -b -t"
+alias batt="acpi -a -b -t"
+alias cat="bat"
 
 # Git
 # alias lg="git log --graph --date=relative --abbrev-commit --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Creset %s%Cgreen(%cr)%creset'"
