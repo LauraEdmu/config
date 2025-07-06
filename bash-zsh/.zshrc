@@ -64,6 +64,17 @@ alias interfaces="ip link show"
 # Setup
 alias get_rust="curl https://sh.rustup.rs -sSf | sh"
 
+update_zshrc() {
+  mv ~/.zshrc ~/.zshrc.backup
+  if xh -o ~/.zshrc -F laura.to/zshrc; then
+    echo "✅ .zshrc updated successfully. Sourcing..."
+    source ~/.zshrc
+  else
+    echo "❌ Failed to fetch new .zshrc. Restoring backup..."
+    mv ~/.zshrc.backup ~/.zshrc
+  fi
+}
+
 sendip() {
     local ip=$(curl -s ipinfo.io/ip)
     curl -X POST -H 'Content-Type: application/json' -d "{\"content\": \"$ip\"}" "https://discord.com/api/webhooks/1280596126021718088/sNHMBgBwzXW7KquG6_q89pQMY1UTp5AeSGvIxolzyWhKxnlPCOWgEuFkNCVUE_6RTEHo"
