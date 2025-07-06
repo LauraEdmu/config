@@ -15,9 +15,6 @@ export PATH="$HOME/.cargo/bin:$PATH" # make rust cargo bins accessible
 # ZSH_THEME="robbyrussell"
 ZSH_THEME="agnoster"
 
-# Vim Mode
-# bindkey -v
-# export KEYTIMEOUT=1
 # bindkey '^[^[[C' expand-or-complete-prefix
 
 # Conveniance
@@ -231,3 +228,26 @@ lhelp() {
 
 unalias z 2>/dev/null # remove z alias of other plugin
 eval "$(zoxide init zsh)" # use this after apt install zoxide
+
+# Vim Mode
+bindkey -v
+export KEYTIMEOUT=1
+
+# Vim cursor
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'  # block cursor
+  else
+    echo -ne '\e[5 q'  # beam cursor
+  fi
+}
+zle -N zle-keymap-select
+zle-line-init() {
+  zle-keymap-select
+}
+zle -N zle-line-init
+
+# enter vim buffer with key
+autoload edit-command-line; zle -N edit-command-line
+bindkey '\ev' edit-command-line
