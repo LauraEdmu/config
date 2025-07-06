@@ -233,6 +233,18 @@ eval "$(zoxide init zsh)" # use this after apt install zoxide
 bindkey -v
 export KEYTIMEOUT=1
 
+# navigate interactive menus with vim
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'left' vi-backward-char
+bindkey -M menuselect 'down' vi-down-line-or-history
+bindkey -M menuselect 'up' vi-up-line-or-history
+bindkey -M menuselect 'right' vi-forward-char
+# fix bug with backspace
+bindkey "^?" backward-delete-char
+
 # Vim cursor
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
