@@ -61,6 +61,22 @@ alias download='aria2c -x 16 -s 16 -k 1M --auto-file-renaming=false --summary-in
 alias dad="curl -H 'Accept: text/plain' https://icanhazdadjoke.com/; echo"
 alias interfaces="ip link show"
 
+# Media
+play() {
+  local search_term="$1"
+  local selected
+  selected="$(fd -i "$search_term" I:/media/ | fzf)"
+  [[ -n "$selected" ]] && vlc "$selected"
+}
+
+playmediafrom() {
+  local search_term="$1"
+  local root_dir="${2:-I:/media/}"
+  local selected
+  selected="$(fd -i "$search_term" "$root_dir" | fzf)"
+  [[ -n "$selected" ]] && vlc "$selected"
+}
+
 # Setup
 alias get_rust="curl https://sh.rustup.rs -sSf | sh"
 
