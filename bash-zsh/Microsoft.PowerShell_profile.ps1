@@ -3,6 +3,29 @@ Import-Module Terminal-Icons # after running "Install-Module -Name Terminal-Icon
 
 Set-Alias -Name btop -Value "C:\Users\laura\Documents\Portable Software\btop4win\btop4win.exe"
 
+function play {
+    param (
+        [string]$SearchTerm
+    )
+
+    $selected = fd -i $SearchTerm I:\qbittorrent\ | fzf
+    if ($selected) {
+        vlc "$selected"
+    }
+}
+
+function playmediafrom {
+    param (
+        [string]$SearchTerm,
+        [string]$RootDir = "I:\media\"
+    )
+
+    $selected = fd -i $SearchTerm $RootDir | fzf
+    if ($selected) {
+        vlc "$selected"
+    }
+}
+
 # oh-my-posh configs. Requires "winget install JanDeDobbeleer.OhMyPosh -s winget
 # Themes at: https://ohmyposh.dev/docs/themes
 # oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\tokyo.omp.json" | Invoke-Expression
