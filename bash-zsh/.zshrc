@@ -84,6 +84,19 @@ playhere() {
   [[ -n "$selected" ]] && vlc "$selected"
 }
 
+subdir() {
+  local search_term="$1"
+  local current_dir="$PWD"
+  local selected
+
+  selected="$(fd -i "$search_term" "$current_dir" --type d | fzf)"
+
+  if [[ -n "$selected" ]]; then
+    cd "$selected"
+  fi
+}
+
+
 # Setup
 alias get_rust="curl https://sh.rustup.rs -sSf | sh"
 

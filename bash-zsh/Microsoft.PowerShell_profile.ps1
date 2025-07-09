@@ -3,6 +3,7 @@ Import-Module Terminal-Icons # after running "Install-Module -Name Terminal-Icon
 
 Set-Alias -Name btop -Value "C:\Users\laura\Documents\Portable Software\btop4win\btop4win.exe"
 
+
 function play {
     param (
         [string]$SearchTerm
@@ -35,6 +36,18 @@ function playhere {
     $selected = fd -i $SearchTerm $currentDir | fzf
     if ($selected) {
         vlc "$selected"
+    }
+}
+
+function subdir {
+    param (
+        [string]$SearchTerm
+    )
+
+    $currentDir = Get-Location
+    $selected = fd -i $SearchTerm $currentDir | fzf
+    if ($selected) {
+        Set-Location "$selected"
     }
 }
 
