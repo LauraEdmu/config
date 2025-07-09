@@ -77,6 +77,13 @@ playmediafrom() {
   [[ -n "$selected" ]] && vlc "$selected"
 }
 
+playhere() {
+  local search_term="$1"
+  local selected
+  selected="$(fd -i "$search_term" . | fzf)"
+  [[ -n "$selected" ]] && vlc "$selected"
+}
+
 # Setup
 alias get_rust="curl https://sh.rustup.rs -sSf | sh"
 

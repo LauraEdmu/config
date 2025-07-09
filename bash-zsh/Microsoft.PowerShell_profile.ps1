@@ -26,6 +26,18 @@ function playmediafrom {
     }
 }
 
+function playhere {
+    param (
+        [string]$SearchTerm
+    )
+
+    $currentDir = Get-Location
+    $selected = fd -i $SearchTerm $currentDir | fzf
+    if ($selected) {
+        vlc "$selected"
+    }
+}
+
 # oh-my-posh configs. Requires "winget install JanDeDobbeleer.OhMyPosh -s winget
 # Themes at: https://ohmyposh.dev/docs/themes
 # oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\tokyo.omp.json" | Invoke-Expression
