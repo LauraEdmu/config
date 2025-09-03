@@ -61,41 +61,171 @@ alias download='aria2c -x 16 -s 16 -k 1M --auto-file-renaming=false --summary-in
 alias dad="curl -H 'Accept: text/plain' https://icanhazdadjoke.com/; echo"
 alias interfaces="ip link show"
 
-# Tmux
-# New Session
+# ===== Tmux + fzf helpers (Zsh) =====
+# Requires: fzf (optional but recommended)
+# Customise fzf flags via $TMUX_FZF_OPTS (e.g., export TMUX_FZF_OPTS="--height=40% --reverse")
+
+# Internal: attach-or-switch depending on whether we're already in tmux
+_tmux_go() {
+  local target="$1"
+  if [[ -n "$TMUX" ]]; then
+    tmux switch-client -t "$target"
+  else
+    tmux attach -t "$target"
+  fi
+}
+
+# Internal: list session names
+_tmux_sessions() {
+  tmux list-sessions -F "#{session_name}" 2>/dev/null
+}
+
+# Internal: pretty list of windows for preview
+_tmux_windows_of() {
+  local s="$1"
+  tmux list-windows -t "$s" -F "  #{?window_active,*, } #{window_index}: #{window_name} (#{window_panes} panes)" 2>/dev/null
+}
+
+# Picker: exact → unique prefix → unique substring → fzf (if available)
+_tmux_pick_session() {
+  local query="$1"
+  local -a sessions; sessions=("${(@f)$(_tmux_sessions)}")
+  (( ${#sessions} )) || { echo "No sessions." >&2; return 1; }
+
+  # If no query, pick most recent (or fzf if multiple & we want interaction)
+  if [[ -z "$query" ]]; then
+    if command -v fzf >/dev/null; then
+      print -rl -- $sessions \
+        | FZF_DEFAULT_OPTS="${TMUX_FZF_OPTS}" fzf --prompt="tmux sessions > " \
+          --preview='_tmux_windows_of {}' --preview-window='right:50%' \
+        || return 1
+      return 0
+    else
+      tmux list-sessions -F "#{session_last_attached} #{session_name}" \
+        | sort -rn | awk 'NR==1{print $2}'
+      return 0
+    fi
+  fi
+
+  # Exact
+  if [[ -n "${sessions[(r)$query]}" ]]; then
+    print -r -- "$query"; return 0
+  fi
+
+  # Unique prefix
+  local -a pref; pref=("${(@M)sessions:#${query}*}")
+  if (( ${#pref} == 1 )); then
+    print -r -- "$pref[1]"; return 0
+  fi
+
+  # Unique substring (case-insensitive)
+  local -a sub; sub=("${(@M)sessions:#(#i)*${query}*}")
+  if (( ${#sub} == 1 )); then
+    print -r -- "$sub[1]"; return 0
+  fi
+
+  # Multiple matches → fzf if present
+  if command -v fzf >/dev/null; then
+    local input
+    if (( ${#pref} > 1 )); then
+      input=("${(@F)${(j:\n:)pref}}")
+    else
+      input=("${(@F)${(j:\n:)sub}}")
+    fi
+    print -rl -- $input \
+      | FZF_DEFAULT_OPTS="${TMUX_FZF_OPTS}" fzf --prompt="tmux sessions (${query}) > " \
+        --preview='_tmux_windows_of {}' --preview-window='right:50%' \
+      || { echo "No selection." >&2; return 1; }
+    return 0
+  fi
+
+  # Otherwise, show ambiguity
+  if (( ${#pref} > 1 )); then
+    echo "Ambiguous prefix: ${pref[*]}" >&2
+  elif (( ${#sub} > 1 )); then
+    echo "Ambiguous match: ${sub[*]}" >&2
+  else
+    echo "No session matching: $query" >&2
+  fi
+  return 1
+}
+
+# New Session: tn <name> [command...]
 tn() {
-  tmux new-session -s "$@"
+  local name="$1"; shift || true
+  [[ -z "$name" ]] && { echo "Usage: tn <name> [command]" >&2; return 1; }
+  tmux new-session -s "$name" "$@"
 }
 
-# Attach to Session
+# Attach (smart + fzf): ta [query]
 ta() {
-  tmux attach -t "$@"
+  local target; target=$(_tmux_pick_session "$1") || return 1
+  _tmux_go "$target"
 }
 
-# List sessions
+# Simple “first substring” attach: taf <needle>
+taf() {
+  local match
+  match=$(_tmux_sessions | grep -i -m1 -- "$1")
+  [[ -n "$match" ]] && _tmux_go "$match" || { echo "No match: $1" >&2; return 1; }
+}
+
+# List sessions (compact)
 tl() {
-  tmux list-sessions
+  tmux list-sessions -F '#{?session_attached,*, } #{session_name}: #{session_windows} windows (last #{?session_last_attached,#{t:session_last_attached},never})'
 }
 
-# Kill a session by name
+# Kill by query (fzf on ambiguity): tk <query>
 tk() {
-  tmux kill-session -t "$@"
+  local target; target=$(_tmux_pick_session "$1") || return 1
+  tmux kill-session -t "$target"
 }
 
-# Detach (from inside tmux, if you like typing instead of Ctrl+b d)
-td() {
-  tmux detach
+# Simple “first substring” kill: tkf <needle>
+tkf() {
+  local match
+  match=$(_tmux_sessions | grep -i -m1 -- "$1")
+  [[ -n "$match" ]] && tmux kill-session -t "$match" || { echo "No match: $1" >&2; return 1; }
 }
 
-# Quickly rename the current session
+# Detach (from inside tmux)
+td() { tmux detach }
+
+# Rename: trn <old> <new>
 trn() {
-  tmux rename-session -t "$1" "$2"
+  [[ $# -eq 2 ]] || { echo "Usage: trn <old> <new>" >&2; return 1; }
+  local target; target=$(_tmux_pick_session "$1") || return 1
+  tmux rename-session -t "$target" "$2"
 }
 
-# Re-run last command in the session (handy when a server crashes)
+# Re-run last command in a target pane: trr <target>
 trr() {
-  tmux send-keys -t "$1" "!!" C-m
+  [[ -n "$1" ]] || { echo "Usage: trr <target>" >&2; return 1; }
+  tmux send-keys -t "$1" Up C-m
 }
+
+# New window in a session: tw <session> [name] [command...]
+tw() {
+  local sess="$1"; shift || true
+  [[ -z "$sess" ]] && { echo "Usage: tw <session> [name] [command]" >&2; return 1; }
+  local target; target=$(_tmux_pick_session "$sess") || return 1
+  local name=""
+  if [[ -n "$1" && "$1" != -* ]]; then
+    name="$1"; shift
+  fi
+  if [[ -n "$name" ]]; then
+    tmux new-window -t "$target:" -n "$name" "$@"
+  else
+    tmux new-window -t "$target:" "$@"
+  fi
+}
+
+# Quick fzf switcher: tf (choose any session and go)
+tf() {
+  local target; target=$(_tmux_pick_session "") || return 1
+  _tmux_go "$target"
+}
+
 
 # Media
 play() {
