@@ -63,7 +63,8 @@ alias interfaces="ip link show"
 
 # ===== Tmux + fzf helpers (Zsh) =====
 # Requires: fzf (optional but recommended)
-# Customise fzf flags via $TMUX_FZF_OPTS (e.g., export TMUX_FZF_OPTS="--height=40% --reverse")
+# Customise fzf flags via $TMUX_FZF_OPTS
+# Example: export TMUX_FZF_OPTS="--height=40% --reverse"
 
 # Internal: attach-or-switch depending on whether we're already in tmux
 _tmux_go() {
@@ -92,14 +93,14 @@ _tmux_pick_session() {
   local -a sessions; sessions=("${(@f)$(_tmux_sessions)}")
   (( ${#sessions} )) || { echo "No sessions." >&2; return 1; }
 
-  # If no query, pick most recent (or fzf if multiple & we want interaction)
+  # No query → fzf (if available) or most recent
   if [[ -z "$query" ]]; then
     if command -v fzf >/dev/null; then
-      print -rl -- $sessions \
-        | FZF_DEFAULT_OPTS="${TMUX_FZF_OPTS}" fzf --prompt="tmux sessions > " \
-          --preview='_tmux_windows_of {}' --preview-window='right:50%' \
-        || return 1
-      return 0
+      local sel
+      sel=$(print -rl -- ${sessions[@]} \
+            | FZF_DEFAULT_OPTS="${TMUX_FZF_OPTS}" fzf --prompt="tmux sessions > " \
+              --preview='_tmux_windows_of {}' --preview-window='right:50%') || { echo "No selection." >&2; return 1; }
+      print -r -- "$sel"; return 0
     else
       tmux list-sessions -F "#{session_last_attached} #{session_name}" \
         | sort -rn | awk 'NR==1{print $2}'
@@ -126,20 +127,16 @@ _tmux_pick_session() {
 
   # Multiple matches → fzf if present
   if command -v fzf >/dev/null; then
-    local input
-    if (( ${#pref} > 1 )); then
-      input=("${(@F)${(j:\n:)pref}}")
-    else
-      input=("${(@F)${(j:\n:)sub}}")
-    fi
-    print -rl -- $input \
-      | FZF_DEFAULT_OPTS="${TMUX_FZF_OPTS}" fzf --prompt="tmux sessions (${query}) > " \
-        --preview='_tmux_windows_of {}' --preview-window='right:50%' \
-      || { echo "No selection." >&2; return 1; }
-    return 0
+    local pool=()
+    (( ${#pref} > 1 )) && pool=("${pref[@]}") || pool=("${sub[@]}")
+    local sel
+    sel=$(print -rl -- ${pool[@]} \
+          | FZF_DEFAULT_OPTS="${TMUX_FZF_OPTS}" fzf --prompt="tmux sessions (${query}) > " \
+            --preview='_tmux_windows_of {}' --preview-window='right:50%') || { echo "No selection." >&2; return 1; }
+    print -r -- "$sel"; return 0
   fi
 
-  # Otherwise, show ambiguity
+  # Otherwise, complain clearly
   if (( ${#pref} > 1 )); then
     echo "Ambiguous prefix: ${pref[*]}" >&2
   elif (( ${#sub} > 1 )); then
@@ -150,6 +147,8 @@ _tmux_pick_session() {
   return 1
 }
 
+# --- Public helpers ---
+
 # New Session: tn <name> [command...]
 tn() {
   local name="$1"; shift || true
@@ -159,7 +158,8 @@ tn() {
 
 # Attach (smart + fzf): ta [query]
 ta() {
-  local target; target=$(_tmux_pick_session "$1") || return 1
+  local target
+  target=$(_tmux_pick_session "$1") || return 1
   _tmux_go "$target"
 }
 
@@ -225,7 +225,6 @@ tf() {
   local target; target=$(_tmux_pick_session "") || return 1
   _tmux_go "$target"
 }
-
 
 # Media
 play() {
