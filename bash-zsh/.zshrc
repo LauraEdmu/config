@@ -61,6 +61,32 @@ alias download='aria2c -x 16 -s 16 -k 1M --auto-file-renaming=false --summary-in
 alias dad="curl -H 'Accept: text/plain' https://icanhazdadjoke.com/; echo"
 alias interfaces="ip link show"
 
+# Tmux
+# List sessions
+tl() {
+  tmux list-sessions
+}
+
+# Kill a session by name
+tk() {
+  tmux kill-session -t "$@"
+}
+
+# Detach (from inside tmux, if you like typing instead of Ctrl+b d)
+td() {
+  tmux detach
+}
+
+# Quickly rename the current session
+trn() {
+  tmux rename-session -t "$1" "$2"
+}
+
+# Re-run last command in the session (handy when a server crashes)
+trr() {
+  tmux send-keys -t "$1" "!!" C-m
+}
+
 # Media
 play() {
   local search_term="$1"
