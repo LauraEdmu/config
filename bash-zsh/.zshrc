@@ -62,6 +62,16 @@ alias dad="curl -H 'Accept: text/plain' https://icanhazdadjoke.com/; echo"
 alias interfaces="ip link show"
 
 # Tmux
+# New Session
+tn() {
+  tmux new-session -s "$@"
+}
+
+# Attach to Session
+ta() {
+  tmux attach -t "$@"
+}
+
 # List sessions
 tl() {
   tmux list-sessions
