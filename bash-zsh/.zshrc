@@ -7,6 +7,7 @@ export PATH="$HOME/bin:$PATH"
 export VISUAL=nvim
 export EDITOR=nvim
 export PATH="$HOME/.cargo/bin:$PATH" # make rust cargo bins accessible
+export PATH="/root/.splash/bin:$PATH"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -396,3 +397,5 @@ zle -N zle-line-init
 # enter vim buffer with key
 autoload edit-command-line; zle -N edit-command-line
 bindkey '\ev' edit-command-line
+
+[[ -s "/root/.sdkman/bin/sdkman-init.sh" ]] && source "/root/.sdkman/bin/sdkman-init.sh"
