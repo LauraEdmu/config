@@ -33,6 +33,8 @@ alias aptfix="sudo apt --fix-broken install"
 alias aptdeps="sudo apt-get install -f"
 alias nvimsudo="EDITOR=nvim visudo"
 alias lsfuzz="ls | fzf --preview='bat --style=numbers --color=always {}'"
+alias curldock="docker run --rm alpine/curl"
+alias 7zmax='7z a -t7z -mx=9 -m0=lzma2 -md=512m -ms=on -mfb=273'
 
 # Windows Alias
 alias del="rm"
@@ -399,3 +401,4 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey '\ev' edit-command-line
 
 [[ -s "/root/.sdkman/bin/sdkman-init.sh" ]] && source "/root/.sdkman/bin/sdkman-init.sh"
+
