@@ -1,18 +1,22 @@
-# /etc/fail2ban/jail.local to override safely
-
 [DEFAULT]
-bantime  = 10m
-findtime = 10m
-maxretry = 5
+bantime  = 45m
+findtime = 30m
+maxretry = 2
 backend  = systemd
+ignoreip = 127.0.0.1/8 192.168.0.62/32
 
-# Use nftables for both IPv4 and IPv6 using nftables for modern systems
+# increment each failure
+ban.increment = true
+# +/- 30s to avoid timing attacks
+bantime.rndtime = 30s
+# scale in powers of 2
+bantime.factor = 2
+bantime.formula = bantime * (factor ** failures)
+
+# Use nftables for both IPv4 and IPv6
 banaction          = nftables[type=multiport, family=both]
 banaction_allports = nftables[type=allports,  family=both]
 
-# Example with ssh
 [sshd]
 enabled = true
-port    = ssh
-backend = systemd
-
+port    = 60638
