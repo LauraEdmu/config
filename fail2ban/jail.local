@@ -1,0 +1,18 @@
+# /etc/fail2ban/jail.local to override safely
+
+[DEFAULT]
+bantime  = 10m
+findtime = 10m
+maxretry = 5
+backend  = systemd
+
+# Use nftables for both IPv4 and IPv6 using nftables for modern systems
+banaction          = nftables[type=multiport, family=both]
+banaction_allports = nftables[type=allports,  family=both]
+
+# Example with ssh
+[sshd]
+enabled = true
+port    = ssh
+backend = systemd
+

@@ -37,6 +37,7 @@ alias curldock="docker run --rm alpine/curl"
 alias 7zmax='7z a -t7z -mx=9 -m0=lzma2 -md=512m -ms=on -mfb=273'
 alias dc='docker compose'
 alias drest='docker compose down && docker compose up -d'
+alias f2bc='fail2ban-client'
 
 # Windows Alias
 alias del="rm"
