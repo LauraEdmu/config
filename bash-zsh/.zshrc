@@ -7,6 +7,7 @@ export PATH="$HOME/bin:$PATH"
 export VISUAL=nvim
 export EDITOR=nvim
 export PATH="$HOME/.cargo/bin:$PATH" # make rust cargo bins accessible
+export PATH="$HOME/go/bin:$PATH"
 export PATH="/root/.splash/bin:$PATH"
 
 # Set name of the theme to load --- if set to "random", it will
