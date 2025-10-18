@@ -40,6 +40,8 @@ alias dc='docker compose'
 alias drest='docker compose down && docker compose up -d'
 alias f2bc='fail2ban-client'
 alias keygen='ssh-keygen -t ed25519'
+alias cpr='cp --reflink'
+alias cprr='cp --reflink=always'
 
 # Windows Alias
 alias del="rm"
