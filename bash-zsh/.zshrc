@@ -42,6 +42,7 @@ alias f2bc='fail2ban-client'
 alias keygen='ssh-keygen -t ed25519'
 alias cpr='cp --reflink'
 alias cprr='cp --reflink=always'
+alias doas='sudo -u '
 
 # Windows Alias
 alias del="rm"
