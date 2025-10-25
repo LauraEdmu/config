@@ -44,6 +44,11 @@ alias cpr='cp --reflink'
 alias cprr='cp --reflink=always'
 alias doas='sudo -u '
 
+# Bounce to real path of a symlink (default cwd)
+realise() {
+  cd "$(realpath "${1:-.}")" || return
+}
+
 # Windows Alias
 alias del="rm"
 alias copy="cp"
