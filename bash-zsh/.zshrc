@@ -78,6 +78,7 @@ alias download='aria2c -x 16 -s 16 -k 1M --auto-file-renaming=false --summary-in
 alias dad="curl -H 'Accept: text/plain' https://icanhazdadjoke.com/; echo"
 alias interfaces="ip link show"
 
+alias zj="zellij"
 
 # ===== Tmux helpers =====
 
