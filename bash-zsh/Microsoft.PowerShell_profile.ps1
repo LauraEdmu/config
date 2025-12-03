@@ -1,7 +1,13 @@
+# Prepend cargo to make sure these get accessed before choco/ alt installs
+$env:PATH = "$HOME\.cargo\bin;$env:PATH"
+
 Import-Module PSFzf # run "Install-Module -Name PSFzf -Scope CurrentUser" before first use, after choco install fzf
 Import-Module Terminal-Icons # after running "Install-Module -Name Terminal-Icons -Scope CurrentUser -Force"
 
 Set-Alias -Name btop -Value "C:\Users\laura\Documents\Portable Software\btop4win\btop4win.exe"
+Set-Alias -Name c -Value 'clear'
+Set-Alias -Name p14 -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\python.exe'
+Set-Alias -Name p13 -Value 'C:\Program Files\Python313\python.exe'
 
 
 function play {
@@ -46,6 +52,18 @@ function subdir {
 
     $currentDir = Get-Location
     $selected = fd -i $SearchTerm $currentDir | fzf
+    if ($selected) {
+        Set-Location "$selected"
+    }
+}
+
+function hsubdir {
+    param (
+        [string]$SearchTerm
+    )
+
+    $currentDir = Get-Location
+    $selected = fd -H -i $SearchTerm $currentDir | fzf
     if ($selected) {
         Set-Location "$selected"
     }
