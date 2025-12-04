@@ -8,6 +8,27 @@ Set-Alias -Name btop -Value "C:\Users\laura\Documents\Portable Software\btop4win
 Set-Alias -Name c -Value 'clear'
 Set-Alias -Name p14 -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\python.exe'
 Set-Alias -Name p13 -Value 'C:\Program Files\Python313\python.exe'
+Set-Alias -Name pip13 -Value 'C:\Users\laura\AppData\Roaming\Python\Python313\Scripts\pip.exe'
+Set-Alias -Name pip14 -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\pip.exe'
+
+Set-Alias -Name 'yt-dlp14' -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\yt-dlp.exe'
+
+### Package Manager Aliases
+# Base aliases
+Set-Alias -Name wg -Value winget -Scope Global -Force
+Set-Alias -Name ch -Value choco  -Scope Global -Force
+
+# Winget functions
+function wgi { winget install @args }
+function wgu { winget upgrade @args }
+function wgs { winget search  @args }
+function wgl { winget list    @args }
+
+# Chocolatey functions
+function chi { choco install  -y @args }
+function chu { choco upgrade     @args }
+function chs { choco search      @args }
+function chl { choco list @args }
 
 
 function play {
