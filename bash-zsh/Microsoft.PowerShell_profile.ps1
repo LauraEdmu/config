@@ -26,9 +26,46 @@ function wgl { winget list    @args }
 
 # Chocolatey functions
 function chi { choco install  -y @args }
-function chu { choco upgrade     @args }
+function chu { choco upgrade --fail-on-not-installed --fail-on-unfound -y @args }
 function chs { choco search      @args }
 function chl { choco list @args }
+
+### FFMPEG Quick commands
+function ffmp3 {
+    param(
+        [Parameter(Mandatory)]
+        [string]$File,
+
+        [Parameter(ValueFromRemainingArguments)]
+        [string[]]$Args
+    )
+
+    ffmpeg -i $File -vn -c:a libmp3lame -b:a 320k -ar 44100 @Args
+}
+
+function ffflac {
+    param(
+        [Parameter(Mandatory)]
+        [string]$File,
+
+        [Parameter(ValueFromRemainingArguments)]
+        [string[]]$Args
+    )
+
+    ffmpeg -i $File -vn -compression_level 12 @Args
+}
+
+function ffnorm {
+    param(
+        [Parameter(Mandatory)]
+        [string]$File,
+
+        [Parameter(ValueFromRemainingArguments)]
+        [string[]]$Args
+    )
+
+    ffmpeg -i $File -vn -af "loudnorm=I=-16:TP=-1.5:LRA=11" @Args
+}
 
 
 function play {
