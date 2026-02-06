@@ -9,7 +9,7 @@ sudo apt update && sudo apt upgrade -y
 
 # Core tooling
 sudo apt install -y \
-  neovim curl git fzf htop btop zsh build-essential ripgrep fd-find
+  neovim curl btop zsh build-essential ripgrep fd-find fzf git htop
 
 # (Optional) shorter alias for fd-find
 sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
@@ -19,7 +19,7 @@ sudo chsh -s "$(command -v zsh)" root
 
 # Create user “laura” with zsh, no password, sudo privileges
 sudo adduser --disabled-password --gecos "" --shell /bin/zsh laura
-sudo usermod -aG sudo laura
+# sudo usermod -aG sudo laura
 sudo passwd -d laura
 
 # SSH keys – root
