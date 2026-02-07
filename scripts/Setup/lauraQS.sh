@@ -12,7 +12,7 @@ sudo apt update && sudo apt full-upgrade -y -o Dpkg::Options::="--force-confdef"
 
 # Core tooling
 sudo apt install -y \
-  neovim curl btop zsh ripgrep fd-find du-dust screen tmux build-essential fzf git htop
+  neovim curl btop zsh ripgrep fd-find du-dust 7z screen tmux fastfetch build-essential fzf git htop
 
 # (Optional) shorter alias for fd-find
 sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
@@ -26,8 +26,9 @@ sudo env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com
 #sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/master/nvim/.oh-my-zsh.7z \
   #-o /root/.oh-my-zsh.7z
 
-# Create user “laura” with zsh, no password, sudo privileges
+# Create user “laura” with zsh, no password
 sudo adduser --disabled-password --gecos "" --shell /bin/zsh laura
+sudo -u laura env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 if [ "$ENABLE_LAURA_SUDO" -eq 1 ]; then
   sudo usermod -aG sudo laura
