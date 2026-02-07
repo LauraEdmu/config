@@ -4,12 +4,14 @@
 
 set -euo pipefail
 
+ENABLE_LAURA_SUDO=0
+
 # Update & upgrade
 sudo apt update && sudo apt upgrade -y
 
 # Core tooling
 sudo apt install -y \
-  neovim curl btop zsh build-essential ripgrep fd-find fzf git htop
+  neovim curl btop zsh ripgrep fd-find du-dust build-essential fzf git htop
 
 # (Optional) shorter alias for fd-find
 sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
@@ -17,10 +19,25 @@ sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
 # Change root’s shell to zsh
 sudo chsh -s "$(command -v zsh)" root
 
+# Install oh my zsh
+sudo env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# prep plugin files
+sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/master/nvim/.oh-my-zsh.7z \
+  -o /root/.oh-my-zsh.7z
+
 # Create user “laura” with zsh, no password, sudo privileges
 sudo adduser --disabled-password --gecos "" --shell /bin/zsh laura
-# sudo usermod -aG sudo laura
-sudo passwd -d laura
+
+if [ "$ENABLE_LAURA_SUDO" -eq 1 ]; then
+  sudo usermod -aG sudo laura
+  # If laura has no password, sudo would be unusable unless you do this:
+  echo 'laura ALL=(ALL) NOPASSWD:ALL' | sudo tee /etc/sudoers.d/laura >/dev/null
+  sudo chmod 440 /etc/sudoers.d/laura
+else
+  sudo deluser laura sudo >/dev/null 2>&1 || true
+  sudo rm -f /etc/sudoers.d/laura
+fi
+
 
 # SSH keys – root
 sudo install -o root -g root -m 700 -d /root/.ssh
@@ -32,7 +49,10 @@ sudo chmod 600 /root/.ssh/authorized_keys
 sudo -u laura install -m 700 -d /home/laura/.ssh
 sudo -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/master/pub_keys/orca.pub \
   -o /home/laura/.ssh/authorized_keys
+sudo chown -R laura:laura /home/laura/.ssh
+sudo chmod 700 /home/laura/.ssh
 sudo chmod 600 /home/laura/.ssh/authorized_keys
+
 
 # SSH daemon hardening
 sudo sed -i \
