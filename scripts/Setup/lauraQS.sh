@@ -11,7 +11,7 @@ sudo apt update && sudo apt upgrade -y
 
 # Core tooling
 sudo apt install -y \
-  neovim curl btop zsh ripgrep fd-find du-dust build-essential fzf git htop
+  neovim curl btop zsh ripgrep fd-find du-dust screen tmux build-essential fzf git htop
 
 # (Optional) shorter alias for fd-find
 sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
@@ -22,8 +22,8 @@ sudo chsh -s "$(command -v zsh)" root
 # Install oh my zsh
 sudo env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 # prep plugin files
-sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/master/nvim/.oh-my-zsh.7z \
-  -o /root/.oh-my-zsh.7z
+#sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/master/nvim/.oh-my-zsh.7z \
+  #-o /root/.oh-my-zsh.7z
 
 # Create user “laura” with zsh, no password, sudo privileges
 sudo adduser --disabled-password --gecos "" --shell /bin/zsh laura
@@ -77,5 +77,66 @@ sudo -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs
 sudo install -o root -g root -m 700 -d /root/.config/nvim
 sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/nvim/init.lua \
   -o /root/.config/nvim/init.lua
+
+# ---- Zsh plugin dependencies & extras ----
+
+# Packages
+sudo apt install -y zoxide
+
+# oh-my-zsh custom plugins directory
+OMZ_CUSTOM="/root/.oh-my-zsh/custom/plugins"
+LAURA_OMZ_CUSTOM="/home/laura/.oh-my-zsh/custom/plugins"
+
+# Function to install a plugin if missing
+install_plugin() {
+  local repo="$1"
+  local name="$2"
+  local target="$3"
+
+  if [ ! -d "$target/$name" ]; then
+    git clone --depth=1 "$repo" "$target/$name"
+  fi
+}
+
+# Root plugins
+sudo install -o root -g root -m 755 -d "$OMZ_CUSTOM"
+
+install_plugin https://github.com/zsh-users/zsh-autosuggestions \
+  zsh-autosuggestions "$OMZ_CUSTOM"
+
+install_plugin https://github.com/zsh-users/zsh-syntax-highlighting \
+  zsh-syntax-highlighting "$OMZ_CUSTOM"
+
+install_plugin https://github.com/zsh-users/zsh-completions \
+  zsh-completions "$OMZ_CUSTOM"
+
+install_plugin https://github.com/agkozak/zsh-z \
+  zsh-z "$OMZ_CUSTOM"
+
+# Laura plugins
+sudo -u laura install -m 755 -d "$LAURA_OMZ_CUSTOM"
+
+sudo -u laura bash -c '
+  install_plugin() {
+    repo="$1"; name="$2"; target="$3"
+    [ -d "$target/$name" ] || git clone --depth=1 "$repo" "$target/$name"
+  }
+
+  install_plugin https://github.com/zsh-users/zsh-autosuggestions \
+    zsh-autosuggestions "'"$LAURA_OMZ_CUSTOM"'"
+
+  install_plugin https://github.com/zsh-users/zsh-syntax-highlighting \
+    zsh-syntax-highlighting "'"$LAURA_OMZ_CUSTOM"'"
+
+  install_plugin https://github.com/zsh-users/zsh-completions \
+    zsh-completions "'"$LAURA_OMZ_CUSTOM"'"
+
+  install_plugin https://github.com/agkozak/zsh-z \
+    zsh-z "'"$LAURA_OMZ_CUSTOM"'"
+'
+
+
+
+## Complete
 
 echo "Setup complete! Recommended: run get_rust next."
