@@ -4,10 +4,11 @@
 
 set -euo pipefail
 
+export DEBIAN_FRONTEND=noninteractive
 ENABLE_LAURA_SUDO=0
 
 # Update & upgrade
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt full-upgrade -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
 # Core tooling
 sudo apt install -y \
