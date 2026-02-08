@@ -19,7 +19,7 @@ sudo env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com
 
 # Create user “laura” with zsh, no password
 sudo adduser --disabled-password --gecos "" --shell /bin/zsh laura
-sudo -u laura env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sudo -H -u laura env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # SSH keys – root
 sudo install -o root -g root -m 700 -d /root/.ssh
@@ -28,8 +28,8 @@ sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/master/pub_ke
 sudo chmod 600 /root/.ssh/authorized_keys
 
 # SSH keys – laura
-sudo -u laura install -m 700 -d /home/laura/.ssh
-sudo -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/master/pub_keys/orca.pub \
+sudo -H -u laura install -m 700 -d /home/laura/.ssh
+sudo -H -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/master/pub_keys/orca.pub \
   -o /home/laura/.ssh/authorized_keys
 sudo chown -R laura:laura /home/laura/.ssh
 sudo chmod 700 /home/laura/.ssh
@@ -49,12 +49,12 @@ sudo timedatectl set-timezone Europe/London
 # zsh configs
 sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/bash-zsh/.zshrc \
   -o /root/.zshrc
-sudo -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/bash-zsh/.zshrc \
+sudo -H -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/bash-zsh/.zshrc \
   -o /home/laura/.zshrc
 
 # Neovim configs
-sudo -u laura install -m 700 -d /home/laura/.config/nvim
-sudo -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/nvim/init.lua \
+sudo -H -u laura install -m 700 -d /home/laura/.config/nvim
+sudo -H -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/nvim/init.lua \
   -o /home/laura/.config/nvim/init.lua
 sudo install -o root -g root -m 700 -d /root/.config/nvim
 sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/nvim/init.lua \
@@ -96,9 +96,9 @@ install_plugin https://github.com/agkozak/zsh-z \
   zsh-z "$OMZ_CUSTOM"
 
 # Laura plugins
-sudo -u laura install -m 755 -d "$LAURA_OMZ_CUSTOM"
+sudo -H -u laura install -m 755 -d "$LAURA_OMZ_CUSTOM"
 
-sudo -u laura bash -c '
+sudo -H -u laura bash -c '
   install_plugin() {
     repo="$1"; name="$2"; target="$3"
     [ -d "$target/$name" ] || git clone --depth=1 "$repo" "$target/$name"
