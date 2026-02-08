@@ -12,7 +12,7 @@ sudo apt update && sudo apt full-upgrade -y -o Dpkg::Options::="--force-confdef"
 
 # Core tooling
 sudo apt install -y \
-  neovim curl btop zsh ripgrep fd-find du-dust 7z screen tmux fastfetch build-essential fzf git htop
+  neovim curl btop zsh ripgrep fd-find du-dust 7zip screen tmux fastfetch build-essential fzf git htop
 
 # (Optional) shorter alias for fd-find
 sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
