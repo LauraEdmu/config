@@ -121,6 +121,7 @@ sudo -H -u laura bash -c '
 
 ## Game Setup Start
 sudo install -d -o laura -g laura /srv/terraria
+sudo install -d -o laura -g laura /srv/terraria/world
 cd /srv/terraria
 VERSION=1454
 curl -Lfo server.zip "https://terraria.org/api/download/pc-dedicated-server/terraria-server-$VERSION.zip"
@@ -138,7 +139,10 @@ BIN="./TerrariaServer.bin.x86_64"
 PORT=7777
 PASS=""
 PLAYERS=10
-WORLD="addme.wld"
+WORLD="../world/addme.wld"
+
+export SDL_VIDEODRIVER=dummy
+export SDL_AUDIODRIVER=dummy
 
 cd "$VERSION"
 
@@ -161,6 +165,9 @@ PASS=""
 PLAYERS=10
 WORLD="\${WORLD:?Set WORLD to desired name (no .wld)}"
 SIZE="\${SIZE:?Set SIZE to 1 (small), 2 (medium), or 3 (large)}"
+
+export SDL_VIDEODRIVER=dummy
+export SDL_AUDIODRIVER=dummy
 
 cd "$VERSION"
 
