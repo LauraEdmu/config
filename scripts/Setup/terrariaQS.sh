@@ -155,6 +155,30 @@ exec "\$BIN" \\
 EOF
 sudo chmod +x start.sh
 
+cat > start2.sh <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+
+BIN="./TerrariaServer.bin.x86_64"
+PORT=7778
+PASS=""
+PLAYERS=10
+WORLD="../world/addme-2.wld"
+
+export SDL_VIDEODRIVER=dummy
+export SDL_AUDIODRIVER=dummy
+
+cd "$VERSION"
+
+exec "\$BIN" \\
+  -port "\$PORT" \\
+  -pass "\$PASS" \\
+  -players "\$PLAYERS" \\
+  -world "\$WORLD" \\
+  -ip 0.0.0.0
+EOF
+sudo chmod +x start2.sh
+
 cat > makeworld.sh <<EOF
 #!/usr/bin/env bash
 set -euo pipefail
