@@ -21,7 +21,6 @@ sudo env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com
 sudo adduser --disabled-password --gecos "" --shell /bin/zsh laura
 cd /home/laura
 sudo -H -u laura env HOME=/home/laura USER=laura LOGNAME=laura RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-#sudo -H -u laura env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # SSH keys – root
 sudo install -o root -g root -m 700 -d /root/.ssh
