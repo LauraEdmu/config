@@ -9,7 +9,7 @@ sudo apt update && sudo apt full-upgrade -y -o Dpkg::Options::="--force-confdef"
 
 # Core tooling
 sudo apt install -y \
-  neovim curl btop zsh screen tmux 7zip git ca-certificates fastfetch
+  neovim curl btop zsh screen tmux 7zip git ca-certificates fastfetch fzf
 
 # Change root’s shell to zsh
 sudo chsh -s "$(command -v zsh)" root
