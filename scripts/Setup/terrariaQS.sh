@@ -217,3 +217,21 @@ echo "Terraria Version $VERSION server is now set up and ready.
 2:cd /srv/terraria
 3:Consider using and changing start.sh
 "
+
+
+# Mount the terraria world volume. This section may need to be changed if I regenerate the volume in linode
+# If manual mounting is desired, comment this section out
+
+sudo install -d -o laura -g laura /world
+sudo install -d -o laura -g laura /world-root
+# sudo mount -o subvol=@world "/dev/disk/by-id/scsi-0Linode_Volume_Terraria" "/world" # soon to be legacy
+# sudo mount -o subvolid=5 "/dev/disk/by-id/scsi-0Linode_Volume_Terraria" "/world-root" # soon to be legacy 
+
+echo "World files mounted at /world and /world-root"
+
+FSTAB_ENTRY="
+/dev/disk/by-id/scsi-0Linode_Volume_Terraria  /world  btrfs  subvol=@world,noatime,nofail,compress=zstd:3  0  0
+/dev/disk/by-id/scsi-0Linode_Volume_Terraria  /world-root  btrfs  subvolid=5,noatime,nofail  0  0
+"
+echo "$FSTAB_ENTRY" | sudo tee -a /etc/fstab > /dev/null
+sudo mount -a
