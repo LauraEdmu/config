@@ -9,7 +9,7 @@ sudo apt update && sudo apt full-upgrade -y -o Dpkg::Options::="--force-confdef"
 
 # Core tooling
 sudo apt install -y \
-  neovim curl btop zsh screen tmux 7zip git ca-certificates fastfetch fzf
+  neovim curl btop zsh screen tmux 7zip git ca-certificates fastfetch fzf btrfs-progs duperemove
 
 # Change root’s shell to zsh
 sudo chsh -s "$(command -v zsh)" root
@@ -18,7 +18,11 @@ sudo chsh -s "$(command -v zsh)" root
 sudo env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Create user “laura” with zsh, no password
-sudo adduser --disabled-password --gecos "" --shell /bin/zsh laura
+LAURA_UID=1000
+LAURA_GID=1000
+sudo addgroup --gid "$LAURA_GID" laura
+sudo adduser --disabled-password --gecos "" --shell /bin/zsh --uid "$LAURA_UID" --gid "$LAURA_GID" laura
+# sudo useradd -m -u "$LAURA_UID" -g "$LAURA_GID" -s /bin/zsh laura
 cd /home/laura
 sudo -H -u laura env HOME=/home/laura USER=laura LOGNAME=laura RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
