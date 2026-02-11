@@ -9,7 +9,7 @@ sudo apt update && sudo apt full-upgrade -y -o Dpkg::Options::="--force-confdef"
 
 # Core tooling
 sudo apt install -y \
-  neovim curl btop zsh screen tmux 7zip git ca-certificates fastfetch fzf btrfs-progs duperemove
+  neovim curl btop zsh screen tmux 7zip git ca-certificates fastfetch fzf btrfs-progs duperemove eza du-dust
 
 # Change root’s shell to zsh
 sudo chsh -s "$(command -v zsh)" root
@@ -143,7 +143,7 @@ BIN="./TerrariaServer.bin.x86_64"
 PORT=7777
 PASS=""
 PLAYERS=10
-WORLD="../world/addme.wld"
+WORLD="/world/addme.wld"
 
 export SDL_VIDEODRIVER=dummy
 export SDL_AUDIODRIVER=dummy
@@ -167,7 +167,7 @@ BIN="./TerrariaServer.bin.x86_64"
 PORT=7778
 PASS=""
 PLAYERS=10
-WORLD="../world/addme-2.wld"
+WORLD="/world/addme-2.wld"
 
 export SDL_VIDEODRIVER=dummy
 export SDL_AUDIODRIVER=dummy
@@ -218,16 +218,13 @@ echo "Terraria Version $VERSION server is now set up and ready.
 3:Consider using and changing start.sh
 "
 
-
 # Mount the terraria world volume. This section may need to be changed if I regenerate the volume in linode
 # If manual mounting is desired, comment this section out
 
 sudo install -d -o laura -g laura /world
 sudo install -d -o laura -g laura /world-root
-# sudo mount -o subvol=@world "/dev/disk/by-id/scsi-0Linode_Volume_Terraria" "/world" # soon to be legacy
-# sudo mount -o subvolid=5 "/dev/disk/by-id/scsi-0Linode_Volume_Terraria" "/world-root" # soon to be legacy 
-
-echo "World files mounted at /world and /world-root"
+# sudo mount -o subvol=@world "/dev/disk/by-id/scsi-0Linode_Volume_Terraria" "/world" # use this instead for non-fstab mounting
+# sudo mount -o subvolid=5 "/dev/disk/by-id/scsi-0Linode_Volume_Terraria" "/world-root" # use this instead for non-fstab mounting
 
 FSTAB_ENTRY="
 /dev/disk/by-id/scsi-0Linode_Volume_Terraria  /world  btrfs  subvol=@world,noatime,nofail,compress=zstd:3  0  0
@@ -235,3 +232,5 @@ FSTAB_ENTRY="
 "
 echo "$FSTAB_ENTRY" | sudo tee -a /etc/fstab > /dev/null
 sudo mount -a
+
+echo "World files mounted at /world and /world-root"
