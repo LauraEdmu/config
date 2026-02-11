@@ -127,7 +127,7 @@ sudo -H -u laura bash -c '
 sudo install -d -o laura -g laura /srv/terraria
 sudo install -d -o laura -g laura /srv/terraria/world
 cd /srv/terraria
-VERSION=1454
+VERSION=1455
 curl -Lfo server.zip "https://terraria.org/api/download/pc-dedicated-server/terraria-server-$VERSION.zip"
 7z x -y server.zip
 rm -rf ./$VERSION/Windows ./$VERSION/Mac server.zip
