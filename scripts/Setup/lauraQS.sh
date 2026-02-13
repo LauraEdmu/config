@@ -27,7 +27,10 @@ sudo env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com
   #-o /root/.oh-my-zsh.7z
 
 # Create user “laura” with zsh, no password
-sudo adduser --disabled-password --gecos "" --shell /bin/zsh laura
+LAURA_UID=1000
+LAURA_GID=1000
+sudo addgroup --gid "$LAURA_GID" laura
+sudo adduser --disabled-password --comment "" --shell /bin/zsh --uid "$LAURA_UID" --gid "$LAURA_GID" laura
 cd /home/laura
 sudo -H -u laura env HOME=/home/laura USER=laura LOGNAME=laura RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 

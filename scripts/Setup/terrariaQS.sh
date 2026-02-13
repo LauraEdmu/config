@@ -21,7 +21,7 @@ sudo env RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com
 LAURA_UID=1000
 LAURA_GID=1000
 sudo addgroup --gid "$LAURA_GID" laura
-sudo adduser --disabled-password --gecos "" --shell /bin/zsh --uid "$LAURA_UID" --gid "$LAURA_GID" laura
+sudo adduser --disabled-password --comment "" --shell /bin/zsh --uid "$LAURA_UID" --gid "$LAURA_GID" laura
 # sudo useradd -m -u "$LAURA_UID" -g "$LAURA_GID" -s /bin/zsh laura
 cd /home/laura
 sudo -H -u laura env HOME=/home/laura USER=laura LOGNAME=laura RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -222,12 +222,14 @@ echo "Terraria Version $VERSION server is now set up and ready.
 # If manual mounting is desired, comment this section out
 
 sudo install -d -o laura -g laura /world
+sudo install -d -o laura -g laura /logs
 sudo install -d -o laura -g laura /world-root
 # sudo mount -o subvol=@world "/dev/disk/by-id/scsi-0Linode_Volume_Terraria" "/world" # use this instead for non-fstab mounting
 # sudo mount -o subvolid=5 "/dev/disk/by-id/scsi-0Linode_Volume_Terraria" "/world-root" # use this instead for non-fstab mounting
 
 FSTAB_ENTRY="
 /dev/disk/by-id/scsi-0Linode_Volume_Terraria  /world  btrfs  subvol=@world,noatime,nofail,compress=zstd:3  0  0
+/dev/disk/by-id/scsi-0Linode_Volume_Terraria  /logs  btrfs  subvol=@logs,noatime,nofail,compress=zstd:3  0  0
 /dev/disk/by-id/scsi-0Linode_Volume_Terraria  /world-root  btrfs  subvolid=5,noatime,nofail  0  0
 "
 echo "$FSTAB_ENTRY" | sudo tee -a /etc/fstab > /dev/null
