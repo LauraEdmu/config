@@ -50,6 +50,15 @@ realise() {
   cd "$(realpath "${1:-.}")" || return
 }
 
+# Yazi cd to dir on exit
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+
 # Windows Alias
 alias del="rm"
 alias copy="cp"
