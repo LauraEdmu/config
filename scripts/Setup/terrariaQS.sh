@@ -11,6 +11,25 @@ sudo apt update && sudo apt full-upgrade -y -o Dpkg::Options::="--force-confdef"
 sudo apt install -y \
   neovim curl btop zsh screen tmux 7zip git ca-certificates fastfetch fzf btrfs-progs duperemove eza du-dust fd-find bat
 
+TMP_YAZI="$(mktemp /tmp/yazi.XXXXXX.deb)"
+curl -fsSLo "$TMP_YAZI" https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-gnu.deb
+sudo apt install -y "$TMP_YAZI"
+sudo rm -f "$TMP_YAZI"
+
+TMP_SD="$(mktemp /tmp/sd.XXXXXX.tar.gz)"
+TMP_DIR="$(mktemp -d /tmp/sd.XXXXXX)"
+curl -fsSLo "$TMP_SD" 'https://github.com/chmln/sd/releases/download/v1.0.0/sd-v1.0.0-x86_64-unknown-linux-gnu.tar.gz'
+tar -xzf "$TMP_SD" -C "$TMP_DIR" --strip-components=1
+sudo install -m 755 "$TMP_DIR/sd" /usr/local/bin/sd
+rm -rf "$TMP_SD" "$TMP_DIR"
+
+TMP_HX="$(mktemp /tmp/HX.XXXXXX.deb)"
+curl -fsSLo "$TMP_HX" 'https://github.com/helix-editor/helix/releases/download/25.07.1/helix_25.7.1-1_amd64.deb'
+sudo apt install -y "$TMP_HX"
+sudo rm -f "$TMP_HX"
+install -d -m 755 /root/.config/helix
+curl -fsSLo /root/.config/helix/config.toml 'https://raw.githubusercontent.com/LauraEdmu/config/master/helix/config.toml'
+
 # Change root’s shell to zsh
 sudo chsh -s "$(command -v zsh)" root
 
@@ -25,6 +44,9 @@ sudo adduser --disabled-password --comment "" --shell /bin/zsh --uid "$LAURA_UID
 # sudo useradd -m -u "$LAURA_UID" -g "$LAURA_GID" -s /bin/zsh laura
 cd /home/laura
 sudo -H -u laura env HOME=/home/laura USER=laura LOGNAME=laura RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sudo -H -u laura -- install -d -m 755 /home/laura/.config/helix
+sudo -H -u laura -- curl -fsSLo /home/laura/.config/helix/config.toml \
+  'https://raw.githubusercontent.com/LauraEdmu/config/master/helix/config.toml'
 
 # SSH keys – root
 sudo install -o root -g root -m 700 -d /root/.ssh
