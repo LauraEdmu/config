@@ -2,6 +2,7 @@ theme = "adwaita-dark"
 
 [editor]
 line-number = "relative"
+cursorline = false
 
 [editor.cursor-shape]
 insert = "bar"
@@ -10,12 +11,25 @@ select = "underline"
 
 [editor.soft-wrap]
 enable = true
+wrap-indicator = ""
 
 [keys.select]
 "}" = "goto_next_paragraph"
 "{" = "goto_prev_paragraph"
+"0" = "goto_line_start"
+"$" = "goto_line_end"
+"^" = "goto_first_nonwhitespace"
+space = { u = ":reset-diff-change" }
+
+[keys.normal]
+"0" = "goto_line_start"
+"A-4" = "shell_keep_pipe"   # replacing the default $
+"$" = "goto_line_end"
+"^" = "goto_first_nonwhitespace"
+"V" = ["extend_to_line_bounds", "select_mode"]
+space = { u = ":reset-diff-change" }
 
 [editor.indent-guides]
 render = true
-character = "|"
+character = "┊"
 skip-levels = 1
