@@ -1,3 +1,4 @@
+vim.g.mapleader = " "
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -12,12 +13,15 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Plugins
 require("lazy").setup({
-  { "preservim/nerdtree" },
-  { "junegunn/fzf", build = function() vim.fn["fzf#install"]() end },
-  { "junegunn/fzf.vim" },
-  { "rebelot/kanagawa.nvim" },
-  { "tpope/vim-commentary" },
-  -- { "folke/which-key.nvim" }, -- optional: you had this commented out
+  spec = {
+    { import = "plugins" }, -- loads lua/plugins/*.lua
+    { "preservim/nerdtree" },
+    { "junegunn/fzf", build = function() vim.fn["fzf#install"]() end },
+    { "junegunn/fzf.vim" },
+    { "rebelot/kanagawa.nvim" },
+    { "tpope/vim-commentary" },
+    -- { "folke/which-key.nvim" },
+  },
 })
 
 -- Theme
@@ -31,7 +35,6 @@ vim.wo.relativenumber = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
-vim.g.mapleader = " "
 
 -- Key mappings
 local map = vim.api.nvim_set_keymap
@@ -77,3 +80,4 @@ map("n", "<C-h>", "<C-w>h", opts)
 map("n", "<C-j>", "<C-w>j", opts)
 map("n", "<C-k>", "<C-w>k", opts)
 map("n", "<C-l>", "<C-w>l", opts)
+
