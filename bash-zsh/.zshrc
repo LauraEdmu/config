@@ -214,14 +214,14 @@ hsubdir() {
 alias get_rust="curl https://sh.rustup.rs -sSf | sh"
 
 update_zshrc() {
-  mv ~/.zshrc ~/.zshrc.backup
-  if xh -o ~/.zshrc -F laura.to/zshrc; then
-    echo "✅ .zshrc updated successfully. Sourcing..."
-    source ~/.zshrc
-  else
-    echo "❌ Failed to fetch new .zshrc. Restoring backup..."
-    mv ~/.zshrc.backup ~/.zshrc
-  fi
+  setopt localtraps
+
+  TMP_ZSHRC="$(mktemp "$HOME/zshrc.XXXXXX")" || return 1
+  trap 'rm -f "$TMP_ZSHRC"' EXIT
+
+  [[ -f "$HOME/.zshrc" ]] && cp -f "$HOME/.zshrc" "$HOME/.zshrc.backup"
+  curl -fsSLo "$TMP_ZSHRC" 'https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/bash-zsh/.zshrc' || return 1
+  mv -f "$TMP_ZSHRC" ~/.zshrc
 }
 
 sendip() {
