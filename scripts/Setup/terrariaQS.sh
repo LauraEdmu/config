@@ -80,12 +80,16 @@ sudo -H -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/r
   -o /home/laura/.zshrc
 
 # Neovim configs
-sudo -H -u laura install -m 700 -d /home/laura/.config/nvim
+sudo -H -u laura install -m 700 -d /home/laura/.config/nvim/lua/plugins
 sudo -H -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/nvim/init.lua \
   -o /home/laura/.config/nvim/init.lua
-sudo install -o root -g root -m 700 -d /root/.config/nvim
+sudo -H -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/nvim/lua/plugins/hop.lua \
+  -o /home/laura/.config/nvim/lua/plugins/hop.lua
+sudo install -o root -g root -m 700 -d /root/.config/nvim/lua/plugins
 sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/nvim/init.lua \
   -o /root/.config/nvim/init.lua
+sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/nvim/lua/plugins/hop.lua \
+  -o /root/.config/nvim/lua/plugins/hop.lua
 
 # ---- Zsh plugin dependencies & extras ----
 
