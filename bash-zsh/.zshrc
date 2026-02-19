@@ -21,7 +21,7 @@ ZSH_THEME="agnoster"
 
 # Conveniance
 alias v="nvim"
-alias zshrc="nvim ~/.zshrc && source ~/.zshrc"
+alias zshrc="hx ~/.zshrc && source ~/.zshrc"
 alias upgrate="sudo apt update && sudo apt upgrade"
 alias ..="cd .."
 alias list="ls -lh"
@@ -44,6 +44,8 @@ alias keygen='ssh-keygen -t ed25519'
 alias cpr='cp --reflink'
 alias cprr='cp --reflink=always'
 alias doas='sudo -u '
+alias e='eza -lha'
+alias h='hx'
 
 # Bounce to real path of a symlink (default cwd)
 realise() {
