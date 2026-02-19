@@ -4,14 +4,21 @@ $env:PATH = "$HOME\.cargo\bin;$env:PATH"
 Import-Module PSFzf # run "Install-Module -Name PSFzf -Scope CurrentUser" before first use, after choco install fzf
 Import-Module Terminal-Icons # after running "Install-Module -Name Terminal-Icons -Scope CurrentUser -Force"
 
+Set-Alias -Name y -Value "yazi"
 Set-Alias -Name btop -Value "C:\Users\laura\Documents\Portable Software\btop4win\btop4win.exe"
 Set-Alias -Name c -Value 'clear'
 Set-Alias -Name p14 -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\python.exe'
 Set-Alias -Name p13 -Value 'C:\Program Files\Python313\python.exe'
 Set-Alias -Name pip13 -Value 'C:\Users\laura\AppData\Roaming\Python\Python313\Scripts\pip.exe'
 Set-Alias -Name pip14 -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\pip.exe'
+# Set-Alias -Name q -Value 'C:\Program Files\Qalculate\qalc.exe'
+function q { & 'C:\Program Files\Qalculate\qalc.exe' @args }
+function a2 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --continue=true @args } 
+function a22 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --max-tries=50 --retry-wait=5 --continue=true @args } 
+function e { & 'C:\Users\laura\.cargo\bin\eza.exe' -lha @args }
 
 Set-Alias -Name 'yt-dlp14' -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\yt-dlp.exe'
+Set-Alias -Name 'yt-dlp13' -Value 'C:\Users\laura\AppData\Roaming\Python\Python313\Scripts\yt-dlp.exe'
 
 ### Package Manager Aliases
 # Base aliases
