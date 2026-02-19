@@ -51,3 +51,8 @@ gzip -df "$TMP_TOML_GZ"
 sudo install -m 0755 "$TMP_TOML" /usr/local/bin/taplo
 
 rm -rf "$TMP_TOML" "$TMP_TOML_GZ"
+
+# ---- YAML ----
+
+npm install -g yaml-language-server
+
