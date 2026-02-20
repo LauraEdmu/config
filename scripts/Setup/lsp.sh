@@ -56,3 +56,16 @@ rm -rf "$TMP_TOML" "$TMP_TOML_GZ"
 
 npm install -g yaml-language-server
 
+# ---- JSON ----
+
+npm install -g vscode-langservers-extracted
+
+# ---- MARKDOWN ----
+
+TMP_MD="$(mktemp /tmp/MD-lsp-XXXXXX)"
+curl -fsSLo "$TMP_MD" \
+  'https://github.com/Feel-ix-343/markdown-oxide/releases/download/v0.25.10/markdown-oxide-v0.25.10-x86_64-unknown-linux-gnu'
+
+sudo install -m 0755 "$TMP_MD" /usr/local/bin/markdown-oxide
+rm -f "$TMP_MD"
+
