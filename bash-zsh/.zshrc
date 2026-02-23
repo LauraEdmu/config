@@ -4,8 +4,8 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$HOME/bin:$PATH"
-export VISUAL=nvim
-export EDITOR=nvim
+export VISUAL=hx
+export EDITOR=hx
 export PATH="$HOME/.cargo/bin:$PATH" # make rust cargo bins accessible
 export PATH="$HOME/go/bin:$PATH"
 export PATH="/root/.splash/bin:$PATH"
@@ -45,7 +45,7 @@ alias cpr='cp --reflink'
 alias cprr='cp --reflink=always'
 alias doas='sudo -u '
 alias e='eza -lha'
-alias h='hx'
+alias x='hx'
 
 # Bounce to real path of a symlink (default cwd)
 realise() {
