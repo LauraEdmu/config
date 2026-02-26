@@ -337,6 +337,13 @@ alias pull="git pull"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions zsh-z fzf)
 
+
+# zstyle ':omz:update' mode disabled   # disables all automatic updates
+zstyle ':omz:update' mode auto       # automatically update without asking
+# zstyle ':omz:update' mode reminder   # check for updates, show a reminder
+# zstyle ':omz:update' frequency <n>   # how often (in days) to check for updates
+# zstyle ':omz:update' verbose silent  # controls how much “update info” is printed
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
