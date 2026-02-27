@@ -224,6 +224,7 @@ update_zshrc() {
   [[ -f "$HOME/.zshrc" ]] && cp -f "$HOME/.zshrc" "$HOME/.zshrc.backup"
   curl -fsSLo "$TMP_ZSHRC" 'https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/bash-zsh/.zshrc' || return 1
   mv -f "$TMP_ZSHRC" ~/.zshrc
+  source ~/.zshrc
 }
 
 sendip() {
