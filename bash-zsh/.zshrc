@@ -56,6 +56,16 @@ realise() {
   cd "$(realpath "${1:-.}")" || return
 }
 
+a2() {
+  aria2c -x 16 -s 16 -k 1M --continue=true "$@"
+}
+
+a22() {
+  aria2c -x 16 -s 16 -k 1M \
+    --max-tries=50 --retry-wait=5 --continue=true \
+    "$@"
+}
+
 # Yazi cd to dir on exit
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
