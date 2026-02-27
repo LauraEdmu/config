@@ -47,9 +47,9 @@ alias doas='sudo -u '
 alias e='eza -lha'
 alias x='hx'
 alias vera='veracrypt'
-alais veram='veracrypt --mount'
-alais verau='veracrypt --unmount'
-alais verac='veracrypt -c'
+alias veram='veracrypt --mount'
+alias verau='veracrypt --unmount'
+alias verac='veracrypt -c'
 
 # Bounce to real path of a symlink (default cwd)
 realise() {
