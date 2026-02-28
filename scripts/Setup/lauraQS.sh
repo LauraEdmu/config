@@ -19,6 +19,11 @@ curl -fsSLo "$TMP_YAZI" https://github.com/sxyazi/yazi/releases/latest/download/
 sudo apt install -y "$TMP_YAZI"
 sudo rm -f "$TMP_YAZI"
 
+TMP_VERA="$(mktemp /tmp/vera.XXXXXX.deb)"
+curl -fsSLo "$TMP_VERA" 'https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-13-amd64.deb'
+sudo apt install -y "$TMP_VERA"
+sudo rm -f "$TMP_VERA"
+
 TMP_SD="$(mktemp /tmp/sd.XXXXXX.tar.gz)"
 TMP_DIR="$(mktemp -d /tmp/sd.XXXXXX)"
 curl -fsSLo "$TMP_SD" 'https://github.com/chmln/sd/releases/download/v1.0.0/sd-v1.0.0-x86_64-unknown-linux-gnu.tar.gz'
