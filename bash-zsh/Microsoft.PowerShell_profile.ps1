@@ -13,8 +13,8 @@ Set-Alias -Name pip13 -Value 'C:\Users\laura\AppData\Roaming\Python\Python313\Sc
 Set-Alias -Name pip14 -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\pip.exe'
 # Set-Alias -Name q -Value 'C:\Program Files\Qalculate\qalc.exe'
 function q { & 'C:\Program Files\Qalculate\qalc.exe' @args }
-function a2 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --continue=true @args } 
-function a22 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --max-tries=50 --retry-wait=5 --continue=true @args } 
+function a2 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --continue=true --file-allocation=trunc @args } 
+function a22 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --max-tries=50 --retry-wait=5 --continue=true --file-allocation=trunc @args } 
 function e { & 'C:\Users\laura\.cargo\bin\eza.exe' -lha @args }
 
 Set-Alias -Name 'yt-dlp14' -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\yt-dlp.exe'
