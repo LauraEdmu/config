@@ -21,6 +21,7 @@ ZSH_THEME="agnoster"
 
 # Conveniance
 alias v="nvim"
+alias ed="ed -p ':'"
 alias zshrc="hx ~/.zshrc && source ~/.zshrc"
 alias upgrate="sudo apt update && sudo apt upgrade"
 alias ..="cd .."
