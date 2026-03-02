@@ -20,6 +20,7 @@ ZSH_THEME="agnoster"
 # bindkey '^[^[[C' expand-or-complete-prefix
 
 # Conveniance
+alias pg="sudo -u postgres psql"
 alias v="nvim"
 alias ed="ed -p ':'"
 alias zshrc="hx ~/.zshrc && source ~/.zshrc"
