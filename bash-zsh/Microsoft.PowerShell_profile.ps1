@@ -19,6 +19,7 @@ function e { & 'C:\Users\laura\.cargo\bin\eza.exe' -lha @args }
 
 Set-Alias -Name 'yt-dlp14' -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\yt-dlp.exe'
 Set-Alias -Name 'yt-dlp13' -Value 'C:\Users\laura\AppData\Roaming\Python\Python313\Scripts\yt-dlp.exe'
+function yt-dlp-ff { yt-dlp --cookies-from-browser firefox @args}
 
 ### Package Manager Aliases
 # Base aliases
