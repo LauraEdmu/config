@@ -100,8 +100,12 @@ sudo timedatectl set-timezone Europe/London
 # zsh configs
 sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/bash-zsh/.zshrc \
   -o /root/.zshrc
+sudo curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/bash-zsh/.p10k.zsh \
+  -o /root/.p10k.zsh
 sudo -H -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/bash-zsh/.zshrc \
   -o /home/laura/.zshrc
+sudo -H -u laura curl -fsSL https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/bash-zsh/.p10k.zsh \
+  -o /home/laura/.p10k.zsh
 
 # Neovim configs
 sudo -H -u laura install -m 700 -d /home/laura/.config/nvim/lua/plugins
@@ -172,7 +176,9 @@ sudo -H -u laura bash -c '
     zsh-z "'"$LAURA_OMZ_CUSTOM"'"
 '
 
-
+sudo git clone 'https://github.com/romkatv/powerlevel10k.git' /root/.oh-my-zsh/custom/themes/powerlevel10k
+sudo git clone 'https://github.com/romkatv/powerlevel10k.git' /home/laura/.oh-my-zsh/custom/themes/powerlevel10k
+sudo chown -R laura:laura /home/laura/.oh-my-zsh/
 
 ## Complete
 
