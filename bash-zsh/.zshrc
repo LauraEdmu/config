@@ -243,12 +243,16 @@ update_zshrc() {
   setopt localtraps
 
   TMP_ZSHRC="$(mktemp "$HOME/zshrc.XXXXXX")" || return 1
-  trap 'rm -f "$TMP_ZSHRC"' EXIT
+  TMP_P10K="$(mktemp "$HOME/p10k.XXXXXX")" || return 1
+  trap 'rm -f "$TMP_ZSHRC" "$TMP_P10K"' EXIT
 
   [[ -f "$HOME/.zshrc" ]] && cp -f "$HOME/.zshrc" "$HOME/.zshrc.backup"
+  [[ -f "$HOME/.p10k.zsh" ]] && cp -f "$HOME/.p10k.zsh" "$HOME/.p10k.zsh.backup"
   curl -fsSLo "$TMP_ZSHRC" 'https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/bash-zsh/.zshrc' || return 1
-  mv -f "$TMP_ZSHRC" ~/.zshrc
-  source ~/.zshrc
+  curl -fsSLo "$TMP_P10K" 'https://raw.githubusercontent.com/LauraEdmu/config/refs/heads/master/bash-zsh/.p10k.zsh' || return 1
+  mv -f "$TMP_ZSHRC" "$HOME/.zshrc" || return 1
+  mv -f "$TMP_P10K" "$HOME/.p10k.zsh" || return 1
+  source "$HOME/.zshrc"
 }
 
 sendip() {
