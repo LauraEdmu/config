@@ -76,14 +76,34 @@ a22() {
     "$@"
 }
 
-# Yazi cd to dir on exit
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	command yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
-	rm -f -- "$tmp"
+sig() {
+  local exit_num="$1"
+  local sig_num
+
+  [[ -z "$exit_num" ]] && {
+    echo "sig: give me an exit code, e.g. sig 130"
+    return 1
+  }
+
+  if (( exit_num <= 128 )); then
+    echo "Exit: $exit_num | not signal-based"
+    return 0
+  fi
+
+  sig_num=$(( exit_num - 128 ))
+  echo "Exit: $exit_num | Sig: $sig_num | $(kill -l "$sig_num")"
 }
+
+ecode() {
+  local exit_num="$?"
+
+  if (( exit_num > 128 )); then
+    sig "$exit_num"
+  else
+    echo "Exit: $exit_num"
+  fi
+}
+alias ec="ecode"
 
 # Windows Alias
 alias del="rm"
