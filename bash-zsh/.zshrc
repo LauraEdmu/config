@@ -67,12 +67,12 @@ realise() {
 }
 
 a2() {
-  aria2c -x 16 -s 16 -k 1M --continue=true --file-allocation=falloc "$@"
+  aria2c -x 16 -s 16 -k 1M --continue=true --disable-ipv6=true --file-allocation=falloc "$@"
 }
 
 a22() {
   aria2c -x 16 -s 16 -k 1M \
-    --max-tries=50 --retry-wait=5 --continue=true --file-allocation=falloc \
+    --max-tries=50 --retry-wait=5 --continue=true --disable-ipv6=true --file-allocation=falloc \
     "$@"
 }
 
