@@ -1,6 +1,19 @@
 # Prepend cargo to make sure these get accessed before choco/ alt installs
 $env:PATH = "$HOME\.cargo\bin;$env:PATH"
 
+
+# change path from C:\Users\laura\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt to stream friendly history
+# Set-PSReadLineOption -HistorySavePath "$env:APPDATA\Microsoft\PowerShell\PSReadLine\ConsoleHost_stream_history.txt"
+# Disable predictions (default is HistoryAndPlugin)
+# Set-PSReadLineOption -PredictionSource None
+
+$StreamMode = $false
+
+if ($StreamMode) {
+    Set-PSReadLineOption -HistorySavePath "$env:APPDATA\Microsoft\PowerShell\PSReadLine\ConsoleHost_stream_history.txt"
+    # Set-PSReadLineOption -PredictionSource None
+}
+
 Import-Module PSFzf # run "Install-Module -Name PSFzf -Scope CurrentUser" before first use, after choco install fzf
 Import-Module Terminal-Icons # after running "Install-Module -Name Terminal-Icons -Scope CurrentUser -Force"
 
@@ -9,12 +22,14 @@ Set-Alias -Name btop -Value "C:\Users\laura\Documents\Portable Software\btop4win
 Set-Alias -Name c -Value 'clear'
 Set-Alias -Name p14 -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\python.exe'
 Set-Alias -Name p13 -Value 'C:\Program Files\Python313\python.exe'
+Set-Alias -Name p12 -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python312\python.exe'
 Set-Alias -Name pip13 -Value 'C:\Users\laura\AppData\Roaming\Python\Python313\Scripts\pip.exe'
+Set-Alias -Name pip12 -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python312\Scripts\pip.exe'
 Set-Alias -Name pip14 -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\pip.exe'
 # Set-Alias -Name q -Value 'C:\Program Files\Qalculate\qalc.exe'
 function q { & 'C:\Program Files\Qalculate\qalc.exe' @args }
-function a2 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --continue=true --file-allocation=trunc @args } 
-function a22 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --max-tries=50 --retry-wait=5 --continue=true --file-allocation=trunc @args } 
+function a2 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --continue=true --disable-ipv6=true --file-allocation=trunc @args } 
+function a22 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --max-tries=50 --retry-wait=5 --continue=true --disable-ipv6=true --file-allocation=trunc @args } 
 function e { & 'C:\Users\laura\.cargo\bin\eza.exe' -lha @args }
 
 Set-Alias -Name 'yt-dlp14' -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\yt-dlp.exe'
