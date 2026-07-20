@@ -61,6 +61,16 @@ alias veram='veracrypt --mount'
 alias verau='veracrypt --unmount'
 alias verac='veracrypt -c'
 
+
+source "$HOME/.config/croc/env"
+
+crocr() {
+    croc \
+        --pass "$CROC_PASS" \
+        --relay "laura.to:9009" \
+        "$@"
+}
+
 # Bounce to real path of a symlink (default cwd)
 realise() {
   cd "$(realpath "${1:-.}")" || return
