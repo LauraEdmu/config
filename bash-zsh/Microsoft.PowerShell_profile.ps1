@@ -36,6 +36,23 @@ Set-Alias -Name 'yt-dlp14' -Value 'C:\Users\laura\AppData\Local\Programs\Python\
 Set-Alias -Name 'yt-dlp13' -Value 'C:\Users\laura\AppData\Roaming\Python\Python313\Scripts\yt-dlp.exe'
 function yt-dlp-ff { yt-dlp --cookies-from-browser firefox @args}
 
+$crocEnvFile = Join-Path $HOME '.config\croc\env.ps1'
+
+if (Test-Path -LiteralPath $crocEnvFile) {
+    . $crocEnvFile
+}
+
+function crocr {
+    if ([string]::IsNullOrWhiteSpace($env:CROC_PASS)) {
+        Write-Error 'CROC_PASS is not set.'
+        return
+    }
+
+    & 'C:\Users\laura\AppData\Local\Microsoft\WinGet\Links\croc.exe' `
+        --pass $env:CROC_PASS `
+        --relay 'laura.to:9009' `
+        @args
+}
 ### Package Manager Aliases
 # Base aliases
 Set-Alias -Name wg -Value winget -Scope Global -Force
@@ -158,6 +175,7 @@ oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\kali.omp.json" | Invoke-Exp
 
 Set-PSReadLineKeyHandler -Chord "Ctrl+r" -ScriptBlock { Invoke-FuzzyHistory }
 Set-Alias -Name npp -Value "C:\Program Files\Notepad++\notepad++.exe" 
+Set-Alias -Name nbt -Value "C:\Users\laura\Documents\Portable Software\NBT Studio\NbtStudio.exe" 
 Set-Alias -Name reboot -Value "Restart-Computer"
 
 function Write-Playlist {
