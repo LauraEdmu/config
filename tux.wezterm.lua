@@ -3,6 +3,7 @@ local wezterm = require 'wezterm'
 
 -- Build the configuration.
 local config = wezterm.config_builder()
+local act = wezterm.action
 
 -- Initial window size.
 config.initial_cols = 120
@@ -13,28 +14,47 @@ config.font = wezterm.font 'JetBrainsMono Nerd Font'
 config.font_size = 11
 config.default_cursor_style = 'BlinkingBar'
 
--- Aesthetic
+-- Aesthetic.
 config.color_scheme = 'tokyonight_night'
 config.colors = {
     background = '#282c34',
 }
+
 config.window_decorations = 'RESIZE'
 config.enable_tab_bar = true
 
--- Launch PowerShell 7 by default.
-config.default_prog = { 'pwsh.exe', '-NoLogo' }
+-- Launch Zsh as a login shell by default.
+config.default_prog = { 'zsh', '-l' }
 
+-- Start maximised.
 wezterm.on('gui-startup', function(cmd)
     local _, _, window = wezterm.mux.spawn_window(cmd or {})
     window:gui_window():maximize()
 end)
 
--- Keyboard Shortcuts
+-- Shell launcher entries.
+config.launch_menu = {
+    {
+        label = 'Zsh',
+        args = { 'zsh', '-l' },
+    },
+    {
+        label = 'Bash',
+        args = { 'bash', '-l' },
+    },
+    {
+        label = 'PowerShell 7',
+        args = { 'pwsh', '-NoLogo' },
+    },
+    {
+        label = 'POSIX sh',
+        args = { 'sh', '-l' },
+    },
+}
 
-local act = wezterm.action
-
+-- Keyboard shortcuts.
 config.keys = {
-    -- Split panes with Ctrl+Alt+Arrow.
+    -- Split panes running the default shell with Ctrl+Alt+Arrow.
     {
         key = 'LeftArrow',
         mods = 'CTRL|ALT',
@@ -68,6 +88,7 @@ config.keys = {
         },
     },
 
+    -- Split panes running Bash with Ctrl+Alt+Shift+Arrow.
     {
         key = 'LeftArrow',
         mods = 'CTRL|ALT|SHIFT',
@@ -75,7 +96,7 @@ config.keys = {
             direction = 'Left',
             size = { Percent = 50 },
             command = {
-                args = { 'cmd.exe' },
+                args = { 'bash', '-l' },
             },
         },
     },
@@ -86,7 +107,7 @@ config.keys = {
             direction = 'Right',
             size = { Percent = 50 },
             command = {
-                args = { 'cmd.exe' },
+                args = { 'bash', '-l' },
             },
         },
     },
@@ -97,7 +118,7 @@ config.keys = {
             direction = 'Up',
             size = { Percent = 50 },
             command = {
-                args = { 'cmd.exe' },
+                args = { 'bash', '-l' },
             },
         },
     },
@@ -108,7 +129,7 @@ config.keys = {
             direction = 'Down',
             size = { Percent = 50 },
             command = {
-                args = { 'cmd.exe' },
+                args = { 'bash', '-l' },
             },
         },
     },
@@ -157,19 +178,19 @@ config.keys = {
         action = act.AdjustPaneSize { 'Down', 1 },
     },
 
-    -- Open a new tab.
+    -- Open a new tab using the default Zsh shell.
     {
         key = 't',
         mods = 'ALT',
         action = act.SpawnTab 'CurrentPaneDomain',
     },
 
-    -- Open tab with new command
+    -- Open a new Bash tab.
     {
         key = 't',
         mods = 'CTRL|ALT',
         action = act.SpawnCommandInNewTab {
-            args = { 'cmd.exe' },
+            args = { 'bash', '-l' },
         },
     },
 
@@ -177,13 +198,28 @@ config.keys = {
     {
         key = 'w',
         mods = 'CTRL',
-        action = act.CloseCurrentTab { confirm = false },
+        action = act.CloseCurrentTab {
+            confirm = false,
+        },
     },
+
     -- Close the current pane.
     {
         key = 'w',
         mods = 'ALT',
-        action = act.CloseCurrentPane { confirm = false },
+        action = act.CloseCurrentPane {
+            confirm = false,
+        },
+    },
+
+    -- Open the shell launcher.
+    {
+        key = 'l',
+        mods = 'CTRL|SHIFT',
+        action = act.ShowLauncherArgs {
+            flags = 'FUZZY|LAUNCH_MENU_ITEMS',
+        },
     },
 }
+
 return config
