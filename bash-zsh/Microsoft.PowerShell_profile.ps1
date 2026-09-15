@@ -33,10 +33,17 @@ function a2 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.e
 function a22 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --max-tries=50 --retry-wait=5 --continue=true --disable-ipv6=true --file-allocation=trunc @args } 
 function e { & 'C:\Users\laura\.cargo\bin\eza.exe' -lha @args }
 function eza { & 'C:\Users\laura\.cargo\bin\eza.exe' --icons @args }
-Remove-Item alias:ls
-function ls { & 'C:\Users\laura\.cargo\bin\eza.exe' --icons -lha @args }
 
-Set-Alias -Name 'yt-dlp14' -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\yt-dlp.exe'
+$eza = 'C:\Users\laura\.cargo\bin\eza.exe'
+
+if (Test-Path $eza) {
+    Remove-Item alias:ls -ErrorAction SilentlyContinue
+
+    function ls {
+        & 'C:\Users\laura\.cargo\bin\eza.exe' --icons -lha @args
+    }
+
+}Set-Alias -Name 'yt-dlp14' -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\yt-dlp.exe'
 Set-Alias -Name 'yt-dlp13' -Value 'C:\Users\laura\AppData\Roaming\Python\Python313\Scripts\yt-dlp.exe'
 function yt-dlp-ff { yt-dlp --cookies-from-browser firefox @args}
 
