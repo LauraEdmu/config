@@ -1,5 +1,6 @@
 # Prepend cargo to make sure these get accessed before choco/ alt installs
 $env:PATH = "$HOME\.cargo\bin;$env:PATH"
+$env:UV_CACHE_DIR = "D:\.cache\uv"
 
 
 # change path from C:\Users\laura\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt to stream friendly history
@@ -31,6 +32,9 @@ function q { & 'C:\Program Files\Qalculate\qalc.exe' @args }
 function a2 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --continue=true --disable-ipv6=true --file-allocation=trunc @args } 
 function a22 { & 'C:\Users\laura\Documents\aria2-1.37.0-win-64bit-build1\aria2c.exe' -x 16 -s 16 -k 1M --max-tries=50 --retry-wait=5 --continue=true --disable-ipv6=true --file-allocation=trunc @args } 
 function e { & 'C:\Users\laura\.cargo\bin\eza.exe' -lha @args }
+function eza { & 'C:\Users\laura\.cargo\bin\eza.exe' --icons @args }
+Remove-Item alias:ls
+function ls { & 'C:\Users\laura\.cargo\bin\eza.exe' --icons -lha @args }
 
 Set-Alias -Name 'yt-dlp14' -Value 'C:\Users\laura\AppData\Local\Programs\Python\Python314\Scripts\yt-dlp.exe'
 Set-Alias -Name 'yt-dlp13' -Value 'C:\Users\laura\AppData\Roaming\Python\Python313\Scripts\yt-dlp.exe'
@@ -175,6 +179,8 @@ oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\kali.omp.json" | Invoke-Exp
 
 Set-PSReadLineKeyHandler -Chord "Ctrl+r" -ScriptBlock { Invoke-FuzzyHistory }
 Set-Alias -Name npp -Value "C:\Program Files\Notepad++\notepad++.exe" 
+# Set-Alias -Name rx -Value "C:\Program Files\iZotope\RX 11 Audio Editor\win64\iZotope RX 11 Audio Editor.exe" 
+function rx { & 'C:\Program Files\iZotope\RX 11 Audio Editor\win64\iZotope RX 11 Audio Editor.exe' @args }
 Set-Alias -Name nbt -Value "C:\Users\laura\Documents\Portable Software\NBT Studio\NbtStudio.exe" 
 Set-Alias -Name reboot -Value "Restart-Computer"
 
