@@ -27,6 +27,69 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # bindkey '^[^[[C' expand-or-complete-prefix
 
+
+autoload -Uz add-zsh-hook
+
+report_exit_code() {
+    local rc=$?
+    [[ "$TODISPLAY" == "1" ]] || return "$rc"
+    local msg=""
+    local payload
+
+    case "$rc" in
+        0|1) ;;
+        2)   msg="ERR2" ;;
+        64)  msg="USAGE" ;;
+        65)  msg="DATAERR" ;;
+        66)  msg="NOINPUT" ;;
+        67)  msg="NOUSER" ;;
+        68)  msg="NOHOST" ;;
+        69)  msg="UNAVAILABLE" ;;
+        70)  msg="SOFTWARE" ;;
+        71)  msg="OSERR" ;;
+        72)  msg="OSFILE" ;;
+        73)  msg="CANTCREAT" ;;
+        74)  msg="IOERR" ;;
+        75)  msg="TEMPFAIL" ;;
+        76)  msg="PROTOCOL" ;;
+        77)  msg="NOPERM" ;;
+        78)  msg="CONFIG" ;;
+        124) msg="TIMEOUT" ;;
+        125) msg="EXEC ERROR" ;;
+        126) msg="NOEXEC" ;;
+        127) msg="NOT FOUND" ;;
+        129) msg="HUP" ;;
+        130) msg="INT" ;;
+        131) msg="QUIT" ;;
+        132) msg="ILL" ;;
+        133) msg="TRAP" ;;
+        134) msg="ABRT" ;;
+        135) msg="BUS" ;;
+        136) msg="FPE" ;;
+        137) msg="KILL" ;;
+        138) msg="USR1" ;;
+        139) msg="SEGV" ;;
+        140) msg="USR2" ;;
+        141) msg="PIPE" ;;
+        142) msg="ALRM" ;;
+        143) msg="TERM" ;;
+    esac
+
+    if [[ -z "$msg" ]]; then
+        payload=$(printf '{"type":"number","content":%d}' "$rc")
+    elif (( ${#msg} <= 4 )); then
+        payload=$(printf '{"type":"show","content":"%s"}' "$msg")
+    else
+        payload=$(printf '{"type":"scroll","content":"%s"}' "$msg")
+    fi
+
+    curl -fsS --max-time 2 -X POST "http://10.10.4.209:8080/display" -H "Content-Type: application/json" -d "$payload" >/var/log/exit_display 2>&1 &!
+
+    return "$rc"
+}
+
+add-zsh-hook precmd report_exit_code
+
 # Conveniance
 alias pg="sudo -u postgres psql"
 alias v="nvim"
